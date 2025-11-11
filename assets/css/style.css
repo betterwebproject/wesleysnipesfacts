@@ -98,6 +98,13 @@ body {
     background-color: var(--background)
 }
 
+header,
+main,
+footer {
+    width: 100%;
+    max-width: var(--max-width);
+}
+
 h1 {
     font-family: var(--heading);
     font-size: var(--heading-1);
@@ -188,7 +195,6 @@ header + main .page-title{
     width: 100%;
     max-width: var(--max-width);
     margin-inline: auto;
-    box-sizing: border-box;
 }
 
 .tag-search-container {
