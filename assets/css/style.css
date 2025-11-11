@@ -163,13 +163,13 @@ p:not(.post p):not(#post-content p) {
 }
 
 header sup {
-    font-size: var(--micro);
+    font-size: calc(var(--heading-1) * .35);
     line-height: normal;
     vertical-align: text-top;
 }
 
 .header-small sup {
-    font-size: calc(var(--micro) * .7);
+    font-size: calc(var(--heading-1) * .25);
     color: var(--accent);
 }
 
