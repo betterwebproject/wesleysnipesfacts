@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sitemap Generator - Wesley Snipes Facts</title>
+        <style>:root{--primary:#111;--accent:brown;--border:#DDD;--background:floralwhite;--background-2:#E8F4F8;--background-3:#ECE6DD}@media(prefers-color-scheme:dark){:root{--primary:#D3CEC1;--accent:#E08585;--border:#5D5D5D;--background:#111;--background-2:#043687;--background-3:#252525}}body{font-family:system-ui,-apple-system,sans-serif;max-width:1200px;padding:2rem 1rem;color:var(--primary);background-color:var(--background)}button{padding:.75rem 1.5rem;border:none;border-radius:.25rem;font-size:1rem;color:var(--background);background:var(--accent);cursor:pointer;}@media (hover:hover) and (pointer:fine){a:hover,button:hover{opacity:.6}}.stats{margin:1rem 0;padding:1rem;border-radius:.25rem;color:var(--primary);background:var(--background-2)}#sitemapOutput{max-height:600px;overflow-x:auto;margin-top:1rem;padding:1rem;border-radius:.25rem;color:var(--primary);background:var(--background-3)}.download-btn{background:var(--primary);margin-left:.5rem;}</style>
+    </head>
+    <body>
+        <h1>Sitemap Generator - Wesley Snipes Facts™</h1>
+        <p>Generate a sitemap.xml file for search engine optimization.</p>
+        
+        <div>
+            <button onclick="generateSitemap()">Generate Sitemap</button>
+            <button class="download-btn" onclick="downloadSitemap()" id="downloadBtn" style="display:none;">Download sitemap.xml</button>
+        </div>
+        
+        <div id="stats" class="stats" style="display:none;"></div>
+        <pre id="sitemapOutput"></pre>
+
+        <script>
+            let generatedSitemap = '';
+            
+            async function generateSitemap() {
+                try {
+                    const output = document.getElementById('sitemapOutput');
+                    const stats = document.getElementById('stats');
+                    const downloadBtn = document.getElementById('downloadBtn');
+                    
+                    output.textContent = 'Loading posts.json...';
+                    
+                    // Load posts from JSON file
+                    const response = await fetch('posts.json');
+                    if (!response.ok) throw new Error('Failed to load posts.json');
+                    const posts = await response.json();
+
+                    const baseUrl = 'https://wesleysnipesfacts.com'; //
+                    
+                    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+                    
+                    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+                    sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+                    // Add homepage with highest priority
+                    sitemap += `  <url>\n`;
+                    sitemap += `    <loc>${baseUrl}/</loc>\n`;
+                    sitemap += `    <lastmod>${today}</lastmod>\n`;
+                    sitemap += `    <changefreq>weekly</changefreq>\n`;
+                    sitemap += `    <priority>1.0</priority>\n`;
+                    sitemap += `  </url>\n`;
+
+                    // Add tag page
+                    sitemap += `  <url>\n`;
+                    sitemap += `    <loc>${baseUrl}/tag.html</loc>\n`;
+                    sitemap += `    <lastmod>${today}</lastmod>\n`;
+                    sitemap += `    <changefreq>weekly</changefreq>\n`;
+                    sitemap += `    <priority>0.8</priority>\n`;
+                    sitemap += `  </url>\n`;
+
+                    // Add posts
+                    posts.forEach(post => {
+                        // Skip posts without proper IDs or empty posts
+                        if (!post.id || post.id === 'big-book') return;
+                        
+                        sitemap += `  <url>\n`;
+                        sitemap += `    <loc>${baseUrl}/post.html?id=${post.id}</loc>\n`;
+                        sitemap += `    <lastmod>${today}</lastmod>\n`;
+                        sitemap += `    <changefreq>monthly</changefreq>\n`;
+                        sitemap += `    <priority>0.6</priority>\n`;
+                        sitemap += `  </url>\n`;
+                    });
+
+                    sitemap += `</urlset>`;
+
+                    // Store for download
+                    generatedSitemap = sitemap;
+                    
+                    // Display sitemap
+                    output.textContent = sitemap;
+                    
+                    // Show stats
+                    const postCount = posts.filter(p => p.id && p.id !== 'big-book').length;
+                    stats.style.display = 'block';
+                    stats.innerHTML = `
+                        <strong>Sitemap Generated Successfully!</strong><br>
+                        Total URLs: ${postCount + 2} (1 homepage + 1 tag page + ${postCount} posts)<br>
+                        Generated: ${new Date().toLocaleString()}
+                    `;
+                    
+                    // Show download button
+                    downloadBtn.style.display = 'inline-block';
+
+                } catch (error) {
+                    document.getElementById('sitemapOutput').textContent = 'Error: ' + error.message;
+                    document.getElementById('stats').style.display = 'none';
+                }
+            }
+            
+            function downloadSitemap() {
+                if (!generatedSitemap) {
+                    alert('Please generate the sitemap first!');
+                    return;
+                }
+                
+                // Create blob and download it
+                const blob = new Blob([generatedSitemap], { type: 'application/xml' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sitemap.xml';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }
+        </script>
+        <script src="/assets/js/theme-o-matic.js"></script>
+    </body>
+</html>
