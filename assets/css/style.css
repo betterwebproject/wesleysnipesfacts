@@ -105,6 +105,19 @@ footer {
     max-width: var(--max-width);
 }
 
+img.header-image {
+    max-width: 200px;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     font-family: var(--heading);
     font-size: var(--heading-1);
@@ -120,19 +133,6 @@ h2 {
 
 p:not(.post p):not(#post-content p) {
     max-width: 52ch;
-}
-
-img.header-image {
-    max-width: 200px;
-    height: auto;
-    aspect-ratio: 1/1;
-}
-
-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .site-title-big {

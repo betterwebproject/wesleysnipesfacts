@@ -152,6 +152,9 @@ async function loadPosts() {
 let lastScrollTop = 0; 
 let scrollTimeout = null;
 const footer = document.querySelector('footer');
+// Make footer visible to JS-controlled transforms once the script runs.
+// The element is hidden by default in HTML to avoid a flash before JS/CSS settle.
+if (footer) footer.style.visibility = 'visible';
 
 function handleScroll() {
     if (scrollTimeout) return;

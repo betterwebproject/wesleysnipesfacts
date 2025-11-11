@@ -75,108 +75,12 @@
             </div>
             <div id="blogroll"></div>
         </main>
-        <footer>
+        <footer style="transform: translateY(100%); visibility: hidden">
             <div class="footer-inner">
                 <a href="statement">Read Me</a>
                 <a href="/rss.xml">RSS</a>
             </div>
         </footer>   
         <script src="/assets/js/main.js" defer></script>
-        <!-- Debug helper: enable by adding ?debug=1 to the URL (non-invasive) -->
-        <script>
-            (function() {
-                try {
-                    const params = new URLSearchParams(window.location.search);
-                    if (params.get('debug') !== '1') return;
-
-                    // Log helper
-                    function rectInfo(el) {
-                        if (!el) return null;
-                        const r = el.getBoundingClientRect();
-                        return { w: Math.round(r.width), h: Math.round(r.height), top: Math.round(r.top), left: Math.round(r.left) };
-                    }
-
-                    const targets = {
-                        doc: document.documentElement,
-                        body: document.body,
-                        header: document.querySelector('header'),
-                        search: document.querySelector('.tag-search-container'),
-                        blogroll: document.getElementById('blogroll'),
-                    };
-
-                    console.log('[layout-debug] initial sizes', {
-                        viewport: { w: window.innerWidth, h: window.innerHeight },
-                        doc: rectInfo(targets.doc),
-                        body: rectInfo(targets.body),
-                        header: rectInfo(targets.header),
-                        search: rectInfo(targets.search),
-                        blogroll: rectInfo(targets.blogroll),
-                    });
-
-                    // MutationObserver to see inserts into blogroll
-                    const mo = new MutationObserver((mutations) => {
-                        mutations.forEach(m => {
-                            if (m.addedNodes && m.addedNodes.length) {
-                                console.log('[layout-debug][mutation] addedNodes', m.addedNodes.length, ' at', Date.now(), { blogroll: rectInfo(targets.blogroll) });
-                                highlightTemporary(targets.blogroll);
-                            }
-                        });
-                    });
-                    if (targets.blogroll) mo.observe(targets.blogroll, { childList: true, subtree: true });
-
-                    // ResizeObserver for key elements
-                    const ro = new (window.ResizeObserver || function() { return { observe: function(){}, disconnect: function(){} }; })((entries) => {
-                        for (const e of entries) {
-                            const el = e.target;
-                            console.log('[layout-debug][resize]', el === document.body ? 'body' : el.id || el.className || el.tagName, '=>', rectInfo(el), 'at', Date.now());
-                            highlightTemporary(el);
-                        }
-                    });
-                    Object.values(targets).forEach(t => { if (t) ro.observe(t); });
-
-                    // PerformanceObserver for layout-shift (Chromium)
-                    if ('PerformanceObserver' in window) {
-                        try {
-                            const po = new PerformanceObserver((list) => {
-                                for (const entry of list.getEntries()) {
-                                    if (entry.entryType === 'layout-shift') {
-                                        console.log('[layout-debug][layout-shift]', entry, 'at', Date.now());
-                                    }
-                                }
-                            });
-                            po.observe({ type: 'layout-shift', buffered: true });
-                            console.log('[layout-debug] PerformanceObserver for layout-shift active (Chromium browsers)');
-                        } catch (e) {
-                            console.log('[layout-debug] PerformanceObserver not available for layout-shift', e);
-                        }
-                    }
-
-                    // Highlight function
-                    function highlightTemporary(el) {
-                        if (!el || el._layoutDebugHighlight) return;
-                        const origOutline = el.style.outline;
-                        el._layoutDebugHighlight = true;
-                        el.style.outline = '3px dashed red';
-                        setTimeout(() => {
-                            el.style.outline = origOutline || '';
-                            el._layoutDebugHighlight = false;
-                        }, 700);
-                    }
-
-                    // Log clicks/focus to correlate user actions
-                    ['click','touchstart','focusin'].forEach(evt => {
-                        window.addEventListener(evt, (e) => {
-                            try {
-                                console.log(`[layout-debug][event] ${evt}`, e.target && (e.target.id || e.target.className || e.target.tagName), 'viewport', { w: window.innerWidth, h: window.innerHeight }, 'time', Date.now());
-                            } catch (err) {}
-                        }, { capture: true });
-                    });
-
-                    console.log('[layout-debug] observers active — reproduce the issue and capture console logs (use remote device debugging if testing on mobile).');
-                } catch (err) {
-                    console.error('layout-debug init failed', err);
-                }
-            })();
-        </script>
     </body>
 </html>
