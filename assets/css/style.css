@@ -94,6 +94,10 @@ p + h2 {
     margin-block-start: var(--big-gap);
 }
 
+.margins-off > * {
+    margin-block-start: 0;
+}
+
 header,
 main,
 footer {
@@ -307,21 +311,16 @@ header + main .page-title{
 }
 
 #blogroll {
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 360ms cubic-bezier(.2,.9,.2,1), transform 360ms cubic-bezier(.2,.9,.2,1);
+    animation: blogroll-fade 360ms cubic-bezier(.2,.9,.2,1) both;
 }
-#blogroll.blogroll-visible {
-    opacity: 1;
-    transform: none;
+
+@keyframes blogroll-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #blogroll {
-        transition: none;
-        transform: none;
-        opacity: 1;
-    }
+    #blogroll { animation: none; }
 }
 
 .share-container {
