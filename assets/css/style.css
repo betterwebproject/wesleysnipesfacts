@@ -249,6 +249,10 @@ header + main .page-title{
     background-color: var(--post-background);
 }
 
+#blogroll {
+    min-height: 100vh; 
+}
+
 #blogroll .post:first-of-type, #tag-posts .post:first-of-type {
     margin-block-start: unset;
 }
