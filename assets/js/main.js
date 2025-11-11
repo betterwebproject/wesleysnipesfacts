@@ -132,8 +132,12 @@ async function loadPosts() {
             fragment.appendChild(postElement);
         });
 
-        // Append fragment once to DOM
-        blogrollEl.appendChild(fragment);
+    // Append fragment once to DOM
+    blogrollEl.appendChild(fragment);
+
+    // Reveal footer now that initial content is present (prevents flash)
+    // Do this only for the first successful append.
+    revealFooterOnce();
 
         
 
@@ -152,9 +156,19 @@ async function loadPosts() {
 let lastScrollTop = 0; 
 let scrollTimeout = null;
 const footer = document.querySelector('footer');
-// Make footer visible to JS-controlled transforms once the script runs.
-// The element is hidden by default in HTML to avoid a flash before JS/CSS settle.
-if (footer) footer.style.visibility = 'visible';
+// Footer starts `display:none` in HTML to avoid a flash on slow browsers.
+// Reveal it only after the first batch of posts is appended so it never appears
+// before blog content is painted.
+let footerRevealed = false;
+
+function revealFooterOnce() {
+    if (!footer || footerRevealed) return;
+    // Restore the intended layout/display from CSS
+    footer.style.display = 'flex';
+    // Keep it off-screen via transform; visibility can remain default
+    footer.style.transform = 'translateY(100%)';
+    footerRevealed = true;
+}
 
 function handleScroll() {
     if (scrollTimeout) return;
