@@ -194,7 +194,9 @@ async function loadPosts() {
         try {
             const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const seenInSession = sessionStorage.getItem('wsf_blogroll_seen');
-            willAnimate = !prefersReduced && !renderedFromCache && !seenInSession;
+            // Animate only once per session (unless user prefers reduced motion).
+            // This avoids the blogroll appearing to "reload" on every navigation.
+            willAnimate = !prefersReduced && !seenInSession;
             if (willAnimate) {
                 blogrollEl.style.opacity = '0';
                 blogrollEl.style.transform = 'translateY(6px)';
