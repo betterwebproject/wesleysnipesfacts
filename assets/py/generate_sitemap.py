@@ -9,7 +9,7 @@ from datetime import datetime
 from urllib.parse import quote
 
 # Configuration
-BASE_URL = 'https://yourwebsite.com'  # UPDATE THIS to your actual domain
+BASE_URL = 'https://wesleysnipesfacts.com'
 SITEMAP_FILE = 'sitemap.xml'
 
 # Static pages
