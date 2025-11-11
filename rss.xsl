@@ -205,7 +205,7 @@
               <xsl:if test="category">
                 <div class="tags margins-off">
                   <xsl:for-each select="category">
-                    <span class="tag">#<xsl:value-of select="."/></span>
+                    <span class="tag"><xsl:value-of select="."/></span>
                   </xsl:for-each>
                 </div>
               </xsl:if>
