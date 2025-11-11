@@ -183,6 +183,14 @@ header + main .page-title{
     margin-block-start: var(--big-gap);
 }
 
+#blogroll,
+.tag-search-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    box-sizing: border-box;
+}
+
 .tag-search-container {
     position: relative;
     width: 100%;

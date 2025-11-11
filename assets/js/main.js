@@ -50,6 +50,34 @@ if (tagSearchForm && tagSearchInput && tagSearchError) {
         tagSearchError.innerHTML = '';
     });
 }
+// Attach a single delegated handler for share buttons on #blogroll (persistent)
+const blogrollEl = document.getElementById('blogroll');
+if (blogrollEl) {
+    blogrollEl.addEventListener('click', function(e) {
+        const btn = e.target.closest('.share-twitter, .share-tumblr, .copy-link');
+        if (!btn) return;
+        const postEl = btn.closest('.post');
+        if (!postEl) return;
+        const titleLink = postEl.querySelector('.post-title');
+        const href = titleLink ? titleLink.getAttribute('href') : null;
+        const postUrl = href ? `${window.location.origin}/${href}` : window.location.href;
+        const title = titleLink ? titleLink.textContent.trim() : '';
+
+        if (btn.classList.contains('share-twitter')) {
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
+            window.open(url, '_blank');
+        } else if (btn.classList.contains('share-tumblr')) {
+            const url = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}`;
+            window.open(url, '_blank');
+        } else if (btn.classList.contains('copy-link')) {
+            navigator.clipboard.writeText(postUrl).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy link:', err);
+            });
+        }
+    });
+}
 let postsData = null; // Cache for JSON data
 let offset = 0;
 const limit = 20;
@@ -77,6 +105,10 @@ async function loadPosts() {
             return;
         }
 
+        // Build all post nodes into a DocumentFragment and append once to minimize reflows
+        const blogrollEl = document.getElementById('blogroll');
+        const fragment = document.createDocumentFragment();
+
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post';
@@ -97,25 +129,13 @@ async function loadPosts() {
                     </div>
                 </div>
             `;
-            document.getElementById('blogroll').appendChild(postElement);
-
-            // Add share button listeners (use class selectors, not IDs)
-            postElement.querySelector('.share-twitter').addEventListener('click', () => {
-                const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
-                window.open(url, '_blank');
-            });
-            postElement.querySelector('.share-tumblr').addEventListener('click', () => {
-                const url = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}`;
-                window.open(url, '_blank');
-            });
-            postElement.querySelector('.copy-link').addEventListener('click', () => {
-                navigator.clipboard.writeText(postUrl).then(() => {
-                    alert('Link copied to clipboard!');
-                }).catch(err => {
-                    console.error('Failed to copy link:', err);
-                });
-            });
+            fragment.appendChild(postElement);
         });
+
+        // Append fragment once to DOM
+        blogrollEl.appendChild(fragment);
+
+        
 
         offset += posts.length;
         isLoading = false;
