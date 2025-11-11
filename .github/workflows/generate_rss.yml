@@ -3,10 +3,10 @@ name: Generate RSS Feed
 on:
   push:
     branches:
-      - main
+      - main  # Change to 'master' if that's your default branch
     paths:
       - 'posts.json'
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
 
 jobs:
   generate-rss:
@@ -24,7 +24,7 @@ jobs:
           node-version: '18'
       
       - name: Generate RSS feed
-        run: node generate-rss.js
+        run: node assets/js/generate_rss.js
       
       - name: Check for changes
         id: check_changes

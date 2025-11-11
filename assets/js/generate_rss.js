@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-// Read posts.json
-const postsData = JSON.parse(fs.readFileSync('posts.json', 'utf8'));
+// Read posts.json - adjust path based on where script is located
+const postsPath = path.join(__dirname, '../../posts.json');
+const postsData = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
 
 // Filter out the alert and big-book posts, reverse to show newest first
 const posts = postsData
