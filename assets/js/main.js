@@ -86,12 +86,17 @@ let postsData = null; // In-memory cache for JSON data
 let offset = 0;
 const limit = 20;
 let isLoading = false;
+// Track whether current render used localStorage cache
+let renderedFromCache = false;
 
 async function loadPosts() {
     if (isLoading) return; 
     isLoading = true;
 
     try {
+        // Reset cache-render flag for this load
+        renderedFromCache = false;
+
         // Load postsData from localStorage cache if available and fresh.
         if (!postsData) {
             try {
@@ -100,6 +105,7 @@ async function loadPosts() {
                     const parsed = JSON.parse(raw);
                     if (parsed && Array.isArray(parsed.posts) && parsed.ts && (Date.now() - parsed.ts) < POSTS_CACHE_TTL) {
                         postsData = parsed.posts.slice().reverse();
+                        renderedFromCache = true;
                         offset = 0;
                     }
                 }
@@ -181,6 +187,23 @@ async function loadPosts() {
             fragment.appendChild(postElement);
         });
 
+        // Decide whether to animate the blogroll. If we will animate, set the
+        // initial inline state BEFORE we append so the content doesn't flash
+        // visible and then disappear on slow devices.
+        let willAnimate = false;
+        try {
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const seenInSession = sessionStorage.getItem('wsf_blogroll_seen');
+            willAnimate = !prefersReduced && !renderedFromCache && !seenInSession;
+            if (willAnimate) {
+                blogrollEl.style.opacity = '0';
+                blogrollEl.style.transform = 'translateY(6px)';
+                blogrollEl.style.transition = 'opacity 360ms cubic-bezier(.2,.9,.2,1), transform 360ms cubic-bezier(.2,.9,.2,1)';
+            }
+        } catch (err) {
+            willAnimate = false;
+        }
+
         // Append fragment once to DOM
         blogrollEl.appendChild(fragment);
 
@@ -188,25 +211,34 @@ async function loadPosts() {
         // Do this only for the first successful append.
         revealFooterOnce();
 
-        // Fade in the whole blogroll container for a smoother entrance.
+        // Diagnostics: log key state so we can debug disappearance on desktop.
         try {
-            // Respect reduced-motion preference
-            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!prefersReduced) {
-                // Set initial inline state so we don't rely on CSS that could hide content if JS fails.
-                blogrollEl.style.opacity = '0';
-                blogrollEl.style.transform = 'translateY(6px)';
-                blogrollEl.style.transition = 'opacity 360ms cubic-bezier(.2,.9,.2,1), transform 360ms cubic-bezier(.2,.9,.2,1)';
-                requestAnimationFrame(() => {
-                    // allow a single frame, then trigger the transition
-                    setTimeout(() => {
-                        blogrollEl.style.opacity = '1';
-                        blogrollEl.style.transform = 'none';
-                    }, 20);
-                });
-            }
-        } catch (err) {
-            // ignore animation errors
+            console.debug('[wsf] blogroll append', {
+                postsLoaded: posts.length,
+                renderedFromCache,
+                willAnimate,
+                seenInSession: sessionStorage.getItem('wsf_blogroll_seen')
+            });
+        } catch (e) {}
+
+        // If we planned to animate, trigger the transition now. Otherwise,
+        // explicitly ensure the blogroll is visible (some browsers may honor
+        // prior inline styles differently).
+        if (willAnimate) {
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    blogrollEl.style.opacity = '1';
+                    blogrollEl.style.transform = 'none';
+                    try { sessionStorage.setItem('wsf_blogroll_seen', '1'); } catch(e) {}
+                }, 20);
+            });
+        } else {
+            // Ensure visible when not animating
+            try {
+                blogrollEl.style.opacity = '1';
+                blogrollEl.style.transform = 'none';
+                blogrollEl.style.transition = '';
+            } catch (e) {}
         }
 
         
