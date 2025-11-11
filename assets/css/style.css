@@ -190,6 +190,11 @@ header + main .page-title{
     margin-block-start: var(--big-gap);
 }
 
+#blogroll {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
 #blogroll,
 .tag-search-container {
     width: 100%;
