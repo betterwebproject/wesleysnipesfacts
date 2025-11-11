@@ -124,10 +124,13 @@ function updateShareLinks(postTitle) {
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
-        const url = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`;
-        window.open(url, '_blank');
+        const tumblrUrl = new URL('https://www.tumblr.com/widgets/share/tool');
+        tumblrUrl.searchParams.set('canonicalUrl', postUrl);
+        tumblrUrl.searchParams.set('title', postTitle);
+        tumblrUrl.searchParams.set('caption', postExcerpt || '');
+        window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
     });
-
+    
     document.getElementById('copyLink').addEventListener('click', () => {
         navigator.clipboard.writeText(postUrl).then(() => {
             alert('Link copied to clipboard!');

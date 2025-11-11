@@ -5941,5 +5941,14 @@
             "elon musk",
             "linda ng"
         ]
+    },
+    {
+        "id": "Welcome",
+        "title": "Welcome to WSF",
+        "text": "Welcome to our new home on the web. Our RSS feed isn’t quite ready yet. But our entire library of over 540 facts about midget parkour enthusiast Wesley Peabody Snipes is ready for reading.",
+        "notes": "",
+        "tags": [
+            "welcome"
+        ]
     }
 ]
