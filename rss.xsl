@@ -123,20 +123,18 @@
           }
           
           .info {
-          margin-block-start: var(--big-gap);
-          padding: var(--gap);
-          border: 1px solid var(--border);
-          border-radius: 1rem;
-          background-color: var(--post-background)
+          margin-block-start: calc(var(--big-gap) * 1.5);
+          margin-block-end: calc(var(--big-gap) * 1.5);
           }
           
           .subscribe {
-          word-break: break-all;
+          width: fit-content;
+          padding: .5rem 1rem;
+          border-radius: .25rem;
           font-family: monospace;
           font-size: var(--micro);
-          padding: .5rem;
-          border-radius: .25rem;
-          background: rgba(0, 0, 0, .05);
+          word-break: break-all;
+          background: var(--post-background);
           }
           
           .item {
@@ -150,10 +148,6 @@
           .item-title {
           font-family: var(--heading);
           font-size: var(--heading-1);
-          }
-          
-          .item-date {
-          font-family: var(--italic);
           }
           
           .tags {
@@ -192,11 +186,10 @@
           </header>
           
           <div class="info">
-            
             <h1>RSS Feed</h1>
             <p>Copy the URL below into your RSS reader to subscribe.</p>
             <p class="subscribe"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
-            <p> Or scroll down for the latest facts.</p>
+            <p> Or scroll down for the latest facts.🔥</p>
           </div>
           
           <xsl:for-each select="rss/channel/item">
@@ -204,7 +197,6 @@
               <h2 class="item-title">
                 <a href="{link}"><xsl:value-of select="title"/></a>
               </h2>
-              <p class="item-date"><xsl:value-of select="pubDate"/></p>
               <div class="item-description">
                 <xsl:value-of select="description" disable-output-escaping="yes"/>
               </div>
