@@ -121,6 +121,7 @@ p:not(.post p):not(#post-content p) {
 
 img.header-image {
     max-width: 200px;
+    aspect-ratio: 1/1;
 }
 
 header {
