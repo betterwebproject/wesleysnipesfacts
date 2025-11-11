@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/assets/css/style.css"/>  
         <style>
           main {
-          max-width: 52ch;
+          max-width: 56ch;
           }
 
           .info {
