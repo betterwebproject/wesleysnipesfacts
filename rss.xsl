@@ -4,124 +4,19 @@
   
   <xsl:template match="/">
     <html lang="en-US">
-      <head>
+      <head>         
         <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title><xsl:value-of select="rss/channel/title"/> - RSS Feed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content"/>
+        <meta name="color-scheme" content="light dark"/>
+        <title><xsl:value-of select="rss/channel/title"/> RSS Feed - Wesley Snipes Facts</title>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/>
+        <link rel="stylesheet" href="/assets/css/style.css"/>  
         <style>
-          @font-face {
-          font-family: 'Triptych Roman';
-          src: url('/assets/type/triptych_roman.woff2') format('woff2');
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-          }
-          
-          @font-face {
-          font-family: 'Triptych Italick';
-          src: url('/assets/type/triptych_italick.woff2') format('woff2');
-          font-weight: 400;
-          font-style: italic;
-          font-display: swap;
-          }
-          
-          @font-face {
-          font-family: 'Triptych Grotesque';
-          src: url('/assets/type/triptych_grotesque.woff2') format('woff2');
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-          }
-          
-          :root {
-          --body: 'Triptych Roman', Georgia, serif;
-          --italic: 'Triptych Italick', Georgia, serif;
-          --heading: 'Triptych Grotesque', Arial, sans-serif;
-          --paragraph: calc(1rem + .2vw);
-          --micro: calc(var(--paragraph) * .85);
-          --heading-1: calc(1.6rem + .75vw);
-          --max-width: 56ch;
-          --gap: 1.5rem;
-          --big-gap: 3rem;
-          --primary: #111;
-          --accent: brown;
-          --border: #DDD;
-          --post-background: floralwhite;
-          --background: #ECE6DD
-          }
-          
-          @media (prefers-color-scheme:dark) {
-          :root {
-          --primary: #D3CEC1;
-          --accent: #E08585;
-          --border: #5D5D5D;
-          --post-background: #171717;
-          --background: #111
-          }
-          }
-          
-          * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box
-          }
-          
-          body {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          min-height: 100vh;
-          padding: var(--big-gap) 1rem;
-          font-family: var(--body);
-          font-size: var(--paragraph);
-          line-height: 1.65;
-          color: var(--primary);
-          background-color: var(--background)
-          }
-          
-          header {
-          display: flex;
-          flex-direction: column;
-          justify-items: center;
-          align-items: center;
-          }
-          
           main {
-          max-width: var(--max-width);
-          width: 100%
+          max-width: 52ch;
           }
-          
-          header * + *, 
-          main * + * {
-          margin-block-start: var(--gap)
-          }
-          
-          .margins-off > * + * {
-          margin-block-start: unset;
-          }
-          
-          img.header-image {
-          max-width: 200px;
-          }
-          
-          h1 {
-          font-family: var(--heading);
-          font-size: var(--heading-1);
-          line-height: 1.2;
-          color: var(--accent);
-          }
-          
-          h2 {
-          font-family: var(--italic);
-          font-size: calc(var(--heading-1) * .575);
-          line-height: 1.2;
-          }
-          
-          .subtitle {
-          font-family: var(--italic);
-          font-size: var(--subtitle);
-          }
-          
+
           .info {
           margin-block-start: calc(var(--big-gap) * 1.5);
           margin-block-end: calc(var(--big-gap) * 1.5);
@@ -129,7 +24,7 @@
           
           .subscribe {
           width: fit-content;
-          padding: .5rem 1rem;
+          padding: .5rem;
           border: 1px solid var(--border);
           border-radius: 1rem;
           box-shadow: 0 2px 6px rgba(0,0,0,.05);
@@ -162,29 +57,14 @@
           font-size: var(--micro);
           color: var(--accent);
           }
-          
-          a {
-          color: var(--accent);
-          text-decoration: none;
-          transition: opacity .2s ease
-          }
-          
-          a:hover {
-          opacity: .6
-          }
-          
-          sup {
-          color: var(--accent);
-          line-height: 1
-          }
         </style>
       </head>
       <body>
         <main>
-          <header>
+          <header class="header-big">
             <img class="header-image" src="/assets/graphics/header_img.webp" alt="Header image"/>
-            <h1><xsl:value-of select="rss/channel/title"/></h1>
-            <p class="subtitle"><xsl:value-of select="rss/channel/description"/></p>
+            <a href="/"><h1 class="site-title-big">Wesley Snipes Facts<sup>TM</sup></h1></a>
+            <h2 class="site-description">Your Home for Wesley Snipes Facts Checks!</h2>
           </header>
           
           <div class="info">

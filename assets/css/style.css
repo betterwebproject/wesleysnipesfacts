@@ -110,6 +110,7 @@ h1 {
 
 h2 {
     font-family: var(--italic);
+    font-weight: normal;
     font-size: calc(var(--heading-1) * .575);
     line-height: 1.2;
 }
