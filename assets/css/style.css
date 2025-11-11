@@ -329,6 +329,25 @@ header + main .page-title{
     }
 }
 
+/* Fade-in the entire blogroll container for a smoother entrance */
+#blogroll {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 360ms cubic-bezier(.2,.9,.2,1), transform 360ms cubic-bezier(.2,.9,.2,1);
+}
+#blogroll.blogroll-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #blogroll {
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+}
+
 .share-container {
     display: flex;
     justify-content: space-between;

@@ -161,8 +161,6 @@ async function loadPosts() {
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post';
-            // Mark as new so we can animate only newly inserted posts
-            postElement.setAttribute('data-new', '1');
             const postUrl = `${window.location.origin}/post.html?id=${post.id}`;
             postElement.innerHTML = `
                 ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
@@ -190,19 +188,12 @@ async function loadPosts() {
         // Do this only for the first successful append.
         revealFooterOnce();
 
-        // Animate newly-inserted posts by adding the .visible class.
-        // Select posts marked data-new and add .visible in the next frame.
+        // Fade in the whole blogroll container for a smoother entrance.
         try {
-            const newPosts = blogrollEl.querySelectorAll('.post[data-new]');
-            if (newPosts.length) {
+            if (!blogrollEl.classList.contains('blogroll-visible')) {
                 requestAnimationFrame(() => {
                     // small timeout ensures browser has applied initial styles
-                    setTimeout(() => {
-                        newPosts.forEach(el => {
-                            el.classList.add('visible');
-                            el.removeAttribute('data-new');
-                        });
-                    }, 20);
+                    setTimeout(() => blogrollEl.classList.add('blogroll-visible'), 20);
                 });
             }
         } catch (err) {
