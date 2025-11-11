@@ -388,6 +388,7 @@ em {
 }
 
 hr {
+    max-width: 52ch;
     height: 2px;
     margin-block-start: var(--big-gap);
     margin-block-end: var(--big-gap);
