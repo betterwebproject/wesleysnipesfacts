@@ -165,6 +165,7 @@ header sup {
 
 .header-small sup {
     font-size: calc(var(--micro) * .7);
+    color: var(--accent);
 }
 
 nav ul {
