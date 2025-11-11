@@ -183,15 +183,6 @@ header + main .page-title{
     margin-block-start: var(--big-gap);
 }
 
-/* Keep the blogroll column stable while posts are injected dynamically */
-#blogroll {
-    width: 100%;
-    max-width: var(--max-width);
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding-inline: var(--gap);
-}
-
 .tag-search-container {
     position: relative;
     width: 100%;
