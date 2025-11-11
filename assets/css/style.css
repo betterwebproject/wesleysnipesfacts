@@ -23,6 +23,9 @@
 }
 
 :root {
+    --max-width: 56ch;
+    --gap: 1.5rem;
+    --big-gap: 3rem;
     --body: 'Triptych Roman';
     --italic: 'Triptych Italick';
     --heading: 'Triptych Grotesque';
@@ -31,36 +34,26 @@
     --heading-1: calc(1.6rem + .75vw);
     --title: calc(1.5rem + 1vw);
     --subtitle: calc(var(--title) * .56);
-    --max-width: 56ch;
-    --gap: 1.5rem;
-    --big-gap: 3rem;
-}
-
-[data-theme="light"]{
     --primary: #111;
     --accent: brown;
     --border: #DDD;
     --post-background: floralwhite;
     --background: #ECE6DD;
 }
-    
-[data-theme="dark"] {
-    --primary: #D3CEC1;
-    --accent: #E08585;
-    --border: #5D5D5D;
-    --post-background: #171717;
-    --background: #111;
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary: #D3CEC1;
+        --accent: #E08585;
+        --border: #5D5D5D;
+        --post-background: #171717;
+        --background: #111;
+    }
 }
 
 html {
     font-size: 16px;
-    --background: #ECE6DD;
     background-color: var(--background);
-}
-
-/* Dark mode */
-html[data-theme="dark"] {
-    --background: #111;
 }
 
 * {
@@ -412,8 +405,7 @@ footer p {
     font-size: calc(var(--paragraph) + .5vw);
 }
 
-footer a, 
-footer button {
+footer a {
     font-family: var(--heading);
     font-size: calc(var(--paragraph) + .5vw);
     color: var(--accent);
