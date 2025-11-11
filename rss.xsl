@@ -35,7 +35,7 @@
           }
           
           .item {
-          margin-block-start: var(--gap);
+          margin-block-end: calc(var(--big-gap) * 2);
           padding: var(--gap);
           border: 1px solid var(--border);
           border-radius: 1rem;
@@ -69,9 +69,8 @@
           
           <div class="info">
             <h1>RSS Feed</h1>
-            <p>Copy the URL below into your RSS reader to subscribe.</p>
+            <p>Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
             <p class="subscribe"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
-            <p> Or scroll down for the latest facts.🔥</p>
           </div>
           
           <xsl:for-each select="rss/channel/item">
