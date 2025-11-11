@@ -107,7 +107,6 @@ main {
     max-width: var(--max-width);
     min-inline-size: calc(var(--max-width));
     margin: 0 auto;
-    padding: 0 var(--gap);
 }
 
 h1 {
@@ -129,6 +128,7 @@ p:not(.post p):not(#post-content p) {
 
 img.header-image {
     max-width: 200px;
+    height: auto;
     aspect-ratio: 1/1;
 }
 
