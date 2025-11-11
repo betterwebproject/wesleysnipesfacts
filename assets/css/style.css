@@ -57,7 +57,13 @@ html {
     background-color: #ECE6DD;
 }
 
-html[data-theme="dark"] {
+html,
+body {
+    background-color: #ECE6DD;
+}
+
+html[data-theme="dark"],
+body[data-theme="dark"] {
     background-color: #111;
 }
 
