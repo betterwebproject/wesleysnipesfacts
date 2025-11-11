@@ -190,10 +190,19 @@ async function loadPosts() {
 
         // Fade in the whole blogroll container for a smoother entrance.
         try {
-            if (!blogrollEl.classList.contains('blogroll-visible')) {
+            // Respect reduced-motion preference
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReduced) {
+                // Set initial inline state so we don't rely on CSS that could hide content if JS fails.
+                blogrollEl.style.opacity = '0';
+                blogrollEl.style.transform = 'translateY(6px)';
+                blogrollEl.style.transition = 'opacity 360ms cubic-bezier(.2,.9,.2,1), transform 360ms cubic-bezier(.2,.9,.2,1)';
                 requestAnimationFrame(() => {
-                    // small timeout ensures browser has applied initial styles
-                    setTimeout(() => blogrollEl.classList.add('blogroll-visible'), 20);
+                    // allow a single frame, then trigger the transition
+                    setTimeout(() => {
+                        blogrollEl.style.opacity = '1';
+                        blogrollEl.style.transform = 'none';
+                    }, 20);
                 });
             }
         } catch (err) {
