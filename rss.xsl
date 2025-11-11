@@ -130,7 +130,9 @@
           .subscribe {
           width: fit-content;
           padding: .5rem 1rem;
-          border-radius: .25rem;
+          border: 1px solid var(--border);
+          border-radius: 1rem;
+          box-shadow: 0 2px 6px rgba(0,0,0,.05);
           font-family: monospace;
           font-size: var(--micro);
           word-break: break-all;
