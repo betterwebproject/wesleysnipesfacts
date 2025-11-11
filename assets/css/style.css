@@ -102,6 +102,14 @@ main {
     max-width: 100%;
 }
 
+#blogroll {
+    width: 100%;
+    max-width: var(--max-width);
+    min-inline-size: calc(var(--max-width));
+    margin: 0 auto;
+    padding: 0 var(--gap);
+}
+
 h1 {
     font-family: var(--heading);
     font-size: var(--heading-1);
