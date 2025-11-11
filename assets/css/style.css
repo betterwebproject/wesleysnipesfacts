@@ -186,6 +186,7 @@ header + main .page-title{
 
 .tag-search-container {
     position: relative;
+    width: 100%;
     max-width: var(--max-width);
 }
 
@@ -238,6 +239,7 @@ header + main .page-title{
 
 .post,
 #post-content {
+    width: 100%;
     max-width: var(--max-width);
     margin-block-end: calc(var(--big-gap) * 2);
     padding: calc(var(--big-gap) * 1.5) var(--gap);
