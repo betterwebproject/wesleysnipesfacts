@@ -310,6 +310,25 @@ header + main .page-title{
     border-radius: 0.5rem;
 }
 
+/* Fade-in for newly appended posts to avoid flash */
+.post {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 320ms cubic-bezier(.2,.9,.2,1), transform 320ms cubic-bezier(.2,.9,.2,1);
+}
+.post.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .post {
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+}
+
 .share-container {
     display: flex;
     justify-content: space-between;

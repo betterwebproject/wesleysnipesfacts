@@ -78,7 +78,11 @@ if (blogrollEl) {
         }
     });
 }
-let postsData = null; // Cache for JSON data
+// Local cache settings for posts.json
+const POSTS_CACHE_KEY = 'wsf_posts_cache_v1';
+const POSTS_CACHE_TTL = 1000 * 60 * 60; // 1 hour
+
+let postsData = null; // In-memory cache for JSON data
 let offset = 0;
 const limit = 20;
 let isLoading = false;
@@ -88,13 +92,59 @@ async function loadPosts() {
     isLoading = true;
 
     try {
-        // Fetch once and cache
+        // Load postsData from localStorage cache if available and fresh.
+        if (!postsData) {
+            try {
+                const raw = localStorage.getItem(POSTS_CACHE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.posts) && parsed.ts && (Date.now() - parsed.ts) < POSTS_CACHE_TTL) {
+                        postsData = parsed.posts.slice().reverse();
+                        offset = 0;
+                    }
+                }
+            } catch (err) {
+                // ignore malformed cache
+                console.warn('posts cache read failed', err);
+            }
+        }
+
+        // If we still don't have postsData, fetch and populate cache synchronously.
         if (!postsData) {
             const response = await fetch('posts.json');
             if (!response.ok) throw new Error('Network response was not ok');
-            postsData = await response.json();
-            postsData = postsData.slice().reverse(); // Reverse order so highest fact first
+            const fresh = await response.json();
+            try {
+                localStorage.setItem(POSTS_CACHE_KEY, JSON.stringify({ ts: Date.now(), posts: fresh }));
+            } catch (err) {
+                // ignore storage quota errors
+                console.warn('posts cache write failed', err);
+            }
+            postsData = fresh.slice().reverse(); // Reverse order so highest fact first
             offset = 0; // Reset offset after reversing
+        } else {
+            // If we rendered from cache, refresh cache in background and update in-memory postsData for future loads
+            (async () => {
+                try {
+                    const resp = await fetch('posts.json');
+                    if (!resp.ok) return;
+                    const fresh = await resp.json();
+                    const cachedRaw = localStorage.getItem(POSTS_CACHE_KEY);
+                    const cachedStr = cachedRaw || '';
+                    const freshStr = JSON.stringify(fresh);
+                    if (cachedStr !== freshStr) {
+                        try {
+                            localStorage.setItem(POSTS_CACHE_KEY, JSON.stringify({ ts: Date.now(), posts: fresh }));
+                        } catch (err) {
+                            console.warn('posts cache write failed', err);
+                        }
+                        // update in-memory postsData for subsequent infinite-loads
+                        postsData = fresh.slice().reverse();
+                    }
+                } catch (err) {
+                    /* background refresh failed - ignore */
+                }
+            })();
         }
 
         const posts = postsData.slice(offset, offset + limit);
@@ -105,13 +155,14 @@ async function loadPosts() {
             return;
         }
 
-        // Build all post nodes into a DocumentFragment and append once to minimize reflows
-        const blogrollEl = document.getElementById('blogroll');
+    // Build all post nodes into a DocumentFragment and append once to minimize reflows
         const fragment = document.createDocumentFragment();
 
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post';
+            // Mark as new so we can animate only newly inserted posts
+            postElement.setAttribute('data-new', '1');
             const postUrl = `${window.location.origin}/post.html?id=${post.id}`;
             postElement.innerHTML = `
                 ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
@@ -132,12 +183,31 @@ async function loadPosts() {
             fragment.appendChild(postElement);
         });
 
-    // Append fragment once to DOM
-    blogrollEl.appendChild(fragment);
+        // Append fragment once to DOM
+        blogrollEl.appendChild(fragment);
 
-    // Reveal footer now that initial content is present (prevents flash)
-    // Do this only for the first successful append.
-    revealFooterOnce();
+        // Reveal footer now that initial content is present (prevents flash)
+        // Do this only for the first successful append.
+        revealFooterOnce();
+
+        // Animate newly-inserted posts by adding the .visible class.
+        // Select posts marked data-new and add .visible in the next frame.
+        try {
+            const newPosts = blogrollEl.querySelectorAll('.post[data-new]');
+            if (newPosts.length) {
+                requestAnimationFrame(() => {
+                    // small timeout ensures browser has applied initial styles
+                    setTimeout(() => {
+                        newPosts.forEach(el => {
+                            el.classList.add('visible');
+                            el.removeAttribute('data-new');
+                        });
+                    }, 20);
+                });
+            }
+        } catch (err) {
+            // ignore animation errors
+        }
 
         
 
