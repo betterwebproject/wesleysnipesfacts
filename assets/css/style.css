@@ -190,14 +190,13 @@ header + main .page-title{
 }
 
 #tag-search-form {
-    display: flex;
-    flex-direction: column;
+    display: block;
     margin-block-start: var(--big-gap);
     margin-block-end: calc(var(--big-gap) + 1.25rem);
 }
 
 #tag-search-input {
-    flex: 1;
+    width: 100%;
     padding: 1rem var(--gap);
     border-radius: 0.5rem;
     border: 1px solid var(--border);
