@@ -99,9 +99,7 @@ p + h2 {
     margin-block-start: 0;
 }
 
-header,
-main,
-footer {
+main {
     width: 100%;
     max-width: var(--max-width);
 }
@@ -117,6 +115,8 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
 }
 
 h1 {
@@ -430,14 +430,9 @@ footer {
     padding: 0 var(--gap);
 }
 
-footer p {
-    font-family: var(--heading);
-    font-size: calc(var(--paragraph) + .5vw);
-}
-
 footer a {
     font-family: var(--heading);
-    font-size: calc(var(--paragraph) + .5vw);
+    font-size: var(--nav-link);
     color: var(--accent);
     background: transparent;
 }
