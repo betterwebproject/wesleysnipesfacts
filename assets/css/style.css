@@ -260,11 +260,6 @@ header + main .page-title {
     color: var(--accent);
 }
 
-.highlight-tag {
-    color: var(--accent);
-    font-weight: inherit;
-}
-
 .post,
 #post-content {
     width: 100%;
@@ -320,6 +315,11 @@ header + main .page-title {
     text-decoration-color: var(--accent);
     text-underline-offset: 2px;
     text-decoration-skip-ink: all;
+}
+
+.highlight-tag {
+    font-weight: inherit;
+    color: var(--accent);
 }
 
 .post-image {
