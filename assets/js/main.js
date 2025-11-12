@@ -69,17 +69,15 @@ if (blogrollEl) {
         const title = titleLink ? titleLink.textContent.trim() : '';
 
         if (btn.classList.contains('share-twitter')) {
-            // X now uses /post endpoint - include title and URL together
-            const tweetText = `${title}\n\n${postUrl}`;
-            const url = `https://x.com/intent/post?text=${encodeURIComponent(tweetText)}`;
+            // Use twitter.com as per X documentation
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
             window.open(url, '_blank', 'noopener,noreferrer');
         } else if (btn.classList.contains('share-tumblr')) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
             
-            // Tumblr share - include title in the caption/content field
-            const contentWithTitle = `${title}\n\n${postText}`;
-            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&content=${encodeURIComponent(contentWithTitle)}`;
+            // Tumblr Link post: title=title, content=URL, caption=description
+            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(postText)}`;
             window.open(tumblrUrl, '_blank', 'width=540,height=600');
         } else if (btn.classList.contains('copy-link')) {
             navigator.clipboard.writeText(postUrl).then(() => {
