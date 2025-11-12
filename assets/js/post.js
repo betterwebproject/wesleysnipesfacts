@@ -41,7 +41,7 @@ function updateMetaTags(post) {
     }
     
     // Update or create Twitter Card tags
-    updateOrCreateMeta('name', 'twitter:card', 'summary');
+    updateOrCreateMeta('name', 'twitter:card', 'summary_large_image');
     updateOrCreateMeta('name', 'twitter:title', post.title);
     updateOrCreateMeta('name', 'twitter:description', description);
     
