@@ -8,6 +8,18 @@ let offset = 0;
 const limit = 20;
 let isLoading = false;
 
+// Function to highlight tag text in post content
+function highlightTagInText(text, tag) {
+    if (!tag) return text;
+    
+    // Create a case-insensitive regex that matches whole words or phrases
+    const escapedTag = tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedTag})`, 'gi');
+    
+    // Replace matches with highlighted spans
+    return text.replace(regex, '<span class="highlight-tag">$1</span>');
+}
+
 async function loadTagPosts() {
     if (isLoading) return;
     isLoading = true;
@@ -55,11 +67,16 @@ async function loadTagPosts() {
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post';
+            
+            // Highlight the tag in post text and notes
+            const highlightedText = tag ? highlightTagInText(post.text, tag) : post.text;
+            const highlightedNotes = tag ? highlightTagInText(post.notes, tag) : post.notes;
+            
             postElement.innerHTML = `
                 ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
-                <p class="post-text">${post.text}</p> 
-                <p class="post-notes">${post.notes}</p>
+                <p class="post-text">${highlightedText}</p> 
+                <p class="post-notes">${highlightedNotes}</p>
                 <p class="post-tags margins-off">${post.tags.map(t =>`<a href="tag.html?tag=${encodeURIComponent(t)}" class="tag${t === tag ? ' active-tag' : ''}">${t}</a>`).join('')}</p>
                 <hr>
                 <div class="share-container">

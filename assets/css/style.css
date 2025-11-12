@@ -260,6 +260,11 @@ header + main .page-title {
     color: var(--accent);
 }
 
+.highlight-tag {
+    color: var(--accent);
+    font-weight: inherit;
+}
+
 .post,
 #post-content {
     width: 100%;
