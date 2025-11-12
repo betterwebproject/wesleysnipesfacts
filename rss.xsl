@@ -12,52 +12,7 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>  
-        <style>
-          main {
-          max-width: 56ch;
-          }
-
-          .info {
-          margin-block-start: calc(var(--big-gap) * 1.5);
-          margin-block-end: calc(var(--big-gap) * 1.5);
-          }
-          
-          .subscribe {
-          width: fit-content;
-          padding: .5rem;
-          border: 1px solid var(--border);
-          border-radius: 1rem;
-          box-shadow: 0 2px 6px rgba(0,0,0,.05);
-          font-family: monospace;
-          font-size: var(--micro);
-          word-break: break-all;
-          background: var(--post-background);
-          }
-          
-          .item {
-          margin-block-end: calc(var(--big-gap) * 2);
-          padding: var(--gap);
-          border: 1px solid var(--border);
-          border-radius: 1rem;
-          background-color: var(--post-background)
-          }
-          
-          .item-title {
-          font-family: var(--heading);
-          font-size: var(--heading-1);
-          }
-          
-          .tags {
-          display: flex;
-          flex-wrap: wrap;
-          }
-          
-          .tag {
-          margin-right: 1rem;
-          font-size: var(--micro);
-          color: var(--accent);
-          }
-        </style>
+        <style>main{max-width:56ch}.info{margin-block-start:calc(var(--big-gap) * 1.5);margin-block-end:calc(var(--big-gap) * 1.25)}.subscribe{width:fit-content;padding:.75rem var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:var(--micro);word-break:break-all;background:var(--post-background)}.item{margin-block-end:calc(var(--big-gap) * 2);padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tag{color:var(--accent)}</style>
       </head>
       <body>
         <main>
@@ -69,7 +24,7 @@
           
           <div class="info">
             <h1>RSS Feed</h1>
-            <p>Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
+            <p>This is an RSS feed. Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
             <p class="subscribe"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
           </div>
           

@@ -31,9 +31,10 @@
     --heading: 'Triptych Grotesque';
     --paragraph: calc(1rem + .2vw);
     --micro: calc(var(--paragraph) * .85);
-    --heading-1: calc(1.6rem + .75vw);
+    --nav-link: calc(1.2rem + .5vw);
     --title: calc(1.5rem + 1vw);
     --subtitle: calc(var(--title) * .56);
+    --heading-1: calc(1.6rem + .75vw);
     --primary: #111;
     --accent: brown;
     --border: #DDD;
@@ -127,8 +128,8 @@ h1 {
 h2 {
     font-family: var(--italic);
     font-weight: normal;
-    font-size: calc(var(--heading-1) * .575);
-    line-height: 1.2;
+    font-size: calc(var(--heading-1) * .65);
+    line-height: 1.4;
 }
 
 p:not(.post p):not(#post-content p) {
@@ -178,7 +179,7 @@ nav ul {
     flex-wrap: wrap;
     width: 100%;
     font-family: var(--heading);
-    font-size: calc(var(--paragraph) + .5vw);
+    font-size: var(--nav-link);
     list-style: none;
 }
 
@@ -210,12 +211,6 @@ header + main .page-title{
     width: 100%;
     max-width: var(--max-width);
     margin-inline: auto;
-}
-
-.tag-search-container {
-    position: relative;
-    width: 100%;
-    max-width: var(--max-width);
 }
 
 #tag-search-form {
@@ -268,11 +263,15 @@ header + main .page-title{
     width: 100%;
     max-width: var(--max-width);
     margin-block-end: calc(var(--big-gap) * 2);
-    padding: calc(var(--big-gap) * 1.5) var(--gap);
+    padding: calc(var(--big-gap) * 1.25) var(--gap);
     border: 1px solid var(--border);
     border-radius: 1rem;
     box-shadow: 0 2px 6px rgba(0,0,0,.05);
     background-color: var(--post-background);
+}
+
+.post.message {
+    padding: var(--big-gap) var(--gap);
 }
 
 #blogroll .post:first-of-type, #tag-posts .post:first-of-type {
@@ -315,6 +314,7 @@ header + main .page-title{
     display: block;
     width: 100%;
     max-width: 500px;
+    height: auto;
     margin: 0 auto;
     border-radius: 0.5rem;
 }
