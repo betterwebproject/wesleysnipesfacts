@@ -76,8 +76,8 @@ if (blogrollEl) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
             
-            // Tumblr Link post: use h2 heading for post title in caption
-            const captionWithTitle = `<h2>${title}</h2>${postText}`;
+            // Tumblr Link post: use h1 with strong for post title in caption
+            const captionWithTitle = `<h1><strong>${title}</strong></h1>${postText}`;
             const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
             window.open(tumblrUrl, '_blank', 'width=540,height=600');
         } else if (btn.classList.contains('copy-link')) {

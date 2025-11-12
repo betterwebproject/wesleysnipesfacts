@@ -128,8 +128,8 @@ function updateShareLinks(post) {
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
-        // Tumblr Link post: use h2 heading for post title in caption
-        const captionWithTitle = `<h2>${post.title}</h2>${plainText}`;
+        // Tumblr Link post: use h1 with strong for post title in caption
+        const captionWithTitle = `<h1><strong>${post.title}</strong></h1>${plainText}`;
         const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
         window.open(tumblrUrl, '_blank', 'width=540,height=600');
     });
