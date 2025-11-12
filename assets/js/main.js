@@ -71,7 +71,12 @@ if (blogrollEl) {
         if (btn.classList.contains('share-twitter')) {
             // Use twitter.com as per X documentation
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
+            // Open immediately to avoid popup blockers
+            const popup = window.open(url, '_blank', 'noopener,noreferrer');
+            if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+                // Popup was blocked - fallback to direct navigation
+                window.location.href = url;
+            }
         } else if (btn.classList.contains('share-tumblr')) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';

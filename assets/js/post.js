@@ -121,10 +121,12 @@ function updateShareLinks(post) {
     console.log('Share data:', { title: post.title, plainText, postUrl }); // Debug log
 
     document.getElementById('share-twitter').addEventListener('click', () => {
-        // Use twitter.com as per X documentation
-        const tweetText = `${post.title}`;
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(postUrl)}`;
-        window.open(url, '_blank', 'noopener,noreferrer');
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
+        const popup = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+            // Popup was blocked - fallback to direct navigation
+            window.location.href = url;
+        }
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
