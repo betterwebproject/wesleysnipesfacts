@@ -102,6 +102,7 @@ p + h2 {
 main {
     width: 100%;
     max-width: var(--max-width);
+    margin-block-end: var(--big-gap);
 }
 
 img.header-image {
@@ -159,7 +160,7 @@ p:not(.post p):not(#post-content p) {
 
 .header-small svg {
     width: auto;
-    height: calc(var(--heading-1) * .7);
+    height: calc(var(--heading-1) * .55);
     line-height: normal;
 }
 
@@ -263,7 +264,7 @@ header + main .page-title {
 #post-content {
     width: 100%;
     max-width: var(--max-width);
-    margin-block-end: calc(var(--big-gap) * 2);
+    margin-block-start: calc(var(--big-gap) * 2);
     padding: calc(var(--big-gap) * 1.25) var(--gap);
     border: 1px solid var(--border);
     border-radius: 1rem;
@@ -272,12 +273,14 @@ header + main .page-title {
 }
 
 .post.message {
+    margin-block-start: unset;
     padding: var(--big-gap) var(--gap);
 }
 
-#blogroll .post:first-of-type, #tag-posts .post:first-of-type {
+#tag-posts .post:first-of-type {
     margin-block-start: unset;
 }
+
 
 .post-title {
     font-family: var(--heading);

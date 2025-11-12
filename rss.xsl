@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:svg="http://www.w3.org/2000/svg">
   <xsl:output method="html" encoding="UTF-8" indent="yes"/>
   
   <xsl:template match="/">
@@ -12,30 +12,18 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>  
-        <style>main{max-width:56ch}.info{margin-block-start:calc(var(--big-gap) * 1.5);margin-block-end:calc(var(--big-gap) * 1.25)}.subscribe{width:fit-content;padding:.75rem var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:var(--micro);word-break:break-all;background:var(--post-background)}.item{margin-block-end:calc(var(--big-gap) * 2);padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
+        <style>main{max-width:56ch}.info{margin-block-start:var(--big-gap);margin-block-end:calc(var(--big-gap) * 1.25)}.subscribe{width:fit-content;padding:.75rem var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:var(--micro);word-break:break-all;background:var(--post-background)}.item{padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start:calc(var(--big-gap) * 2)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
       </head>
       <body>
         <main>
-          <header class="header-big">
-            <img class="header-image" src="/assets/graphics/header_img.webp" alt="Header image"/>
-            <a href="/"><h1 class="site-title-big">Wesley Snipes Facts<sup>TM</sup></h1></a>
-            <h2 class="site-description">Your Home for Wesley Snipes Facts Checks!</h2>
-            <nav>
-              <ul class="margins-off">
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/death">Death</a>
-                </li>
-                <li>
-                  <a href="/taxes">Taxes</a>
-                </li>
-                <li>
-                  <a href="/faq">FAQ</a>   
-                </li>
-              </ul>
-            </nav>
+          <header class="header-small">
+            <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500"/>
+            <a class="margins-off" href="/">
+              <svg:svg viewBox="0 0 25 21.4" role="img" aria-hidden="true">
+                <svg:path fill="currentColor" d="M.523 9.449a1.79 1.79 0 0 0 0 2.528l8.929 8.928a1.788 1.788 0 0 0 2.528-2.527l-5.888-5.882h17.121c.988 0 1.786-.798 1.786-1.786s-.798-1.786-1.786-1.786H6.098l5.876-5.881A1.788 1.788 0 0 0 9.446.515L.518 9.443z"/>
+              </svg:svg>
+              <span class="site-title-small">Wesley Snipes Facts<sup>TM</sup></span>
+            </a>
           </header>
           
           <div class="info">
