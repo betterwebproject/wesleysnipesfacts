@@ -118,9 +118,12 @@ function updateShareLinks(post) {
     const postUrl = `${window.location.origin}/post.html?id=${postId}`;
     const plainText = getPlainText(post.text);
 
+    console.log('Share data:', { title: post.title, plainText, postUrl }); // Debug log
+
     document.getElementById('share-twitter').addEventListener('click', () => {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
-        window.open(url, '_blank');
+        const url = `https://x.com/intent/post?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
+        console.log('Twitter URL:', url); // Debug log
+        window.open(url, '_blank', 'noopener,noreferrer');
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
@@ -128,8 +131,9 @@ function updateShareLinks(post) {
         tumblrUrl.searchParams.set('posttype', 'text');
         tumblrUrl.searchParams.set('data-title', post.title);
         tumblrUrl.searchParams.set('data-content', plainText);
-        tumblrUrl.searchParams.set('canonicalUrl', postUrl);
+        // Don't include canonicalUrl - it causes Tumblr to use OG tags instead
         
+        console.log('Tumblr URL:', tumblrUrl.toString()); // Debug log
         window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
     });
     

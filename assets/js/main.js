@@ -63,22 +63,28 @@ if (blogrollEl) {
         if (!postEl) return;
         const titleLink = postEl.querySelector('.post-title');
         const href = titleLink ? titleLink.getAttribute('href') : null;
-        const postUrl = href ? `${window.location.origin}/${href}` : window.location.href;
+        // Remove leading slash from href if present to avoid double slashes
+        const cleanHref = href ? href.replace(/^\//, '') : null;
+        const postUrl = cleanHref ? `${window.location.origin}/${cleanHref}` : window.location.href;
         const title = titleLink ? titleLink.textContent.trim() : '';
 
         if (btn.classList.contains('share-twitter')) {
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
-            window.open(url, '_blank');
+            const url = `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
+            console.log('Twitter URL:', url); // Debug log
+            window.open(url, '_blank', 'noopener,noreferrer');
         } else if (btn.classList.contains('share-tumblr')) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
+            
+            console.log('Tumblr share data:', { title, postText, postUrl }); // Debug log
             
             const tumblrUrl = new URL('https://www.tumblr.com/widgets/share/tool');
             tumblrUrl.searchParams.set('posttype', 'text');
             tumblrUrl.searchParams.set('data-title', title);
             tumblrUrl.searchParams.set('data-content', postText);
-            tumblrUrl.searchParams.set('canonicalUrl', postUrl);
+            // Don't include canonicalUrl - it causes Tumblr to use OG tags instead
             
+            console.log('Tumblr URL:', tumblrUrl.toString()); // Debug log
             window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
         } else if (btn.classList.contains('copy-link')) {
             navigator.clipboard.writeText(postUrl).then(() => {
