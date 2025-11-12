@@ -305,8 +305,8 @@ header + main .page-title {
 }
 
 .tag {
-    font-size: var(--micro);
     margin-right: 1rem;
+    font-size: var(--micro);
 }
 
 .active-tag {
