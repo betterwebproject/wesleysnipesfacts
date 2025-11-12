@@ -1,12 +1,17 @@
 const params = new URLSearchParams(window.location.search);
 const postId = params.get('id');
 
+// Helper function to extract plain text from HTML
+function getPlainText(html) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+}
+
 // Function to update SEO meta tags
 function updateMetaTags(post) {
     // Extract plain text from HTML for description
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = post.text;
-    const plainText = tempDiv.textContent || tempDiv.innerText || '';
+    const plainText = getPlainText(post.text);
     
     // Create description (first 155 characters for SEO)
     const description = plainText.substring(0, 155) + (plainText.length > 155 ? '...' : '');
@@ -58,6 +63,10 @@ function updateOrCreateMeta(attr, attrValue, content) {
 }
 
 async function loadPost() {
+    // Remove any previous heading first
+    const prevHeading = document.querySelector('.post-results-heading');
+    if (prevHeading) prevHeading.remove();
+
     try {
         const response = await fetch('posts.json');
         if (!response.ok) throw new Error('Failed to load post');
@@ -66,24 +75,19 @@ async function loadPost() {
         const post = data.find(p => p.id == postId);
         
         if (post) {
-            // Update SEO meta tags first
+            // Update SEO meta tags
             updateMetaTags(post);
-            
-            // Update page title
-            document.title = post.title || '';
             
             // Dynamically insert heading above #post-content
             const postContent = document.getElementById('post-content');
             if (postContent) {
-                // Remove any previous heading
-                const prevHeading = document.querySelector('.post-results-heading');
-                if (prevHeading) prevHeading.remove();
                 const headingText = `Fact showing <span class="post-term">#${postId}</span>`;
                 const headingEl = document.createElement('h2');
                 headingEl.className = 'post-results-heading';
                 headingEl.innerHTML = headingText;
                 postContent.parentNode.insertBefore(headingEl, postContent);
             }
+            
             postContent.innerHTML = `
                 ${post.title ? `<h1 class="post-title">${post.title}</h1>` : ''}
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
@@ -100,34 +104,32 @@ async function loadPost() {
                     </div>
                 </div>
             `;
-            updateShareLinks(post.title);
+            updateShareLinks(post);
         } else {
             document.getElementById('post-content').innerHTML = '<p>Post not found.</p>';
-            const prevHeading = document.querySelector('.post-results-heading');
-            if (prevHeading) prevHeading.remove();
         }
     } catch (error) {
         console.error('Error loading post:', error);
         document.getElementById('post-content').innerHTML = '<p>Error loading post. Please try again.</p>';
-        const prevHeading = document.querySelector('.post-results-heading');
-        if (prevHeading) prevHeading.remove();
     }
 }
 
-function updateShareLinks(postTitle) {
-    const postId = new URLSearchParams(window.location.search).get('id'); 
+function updateShareLinks(post) {
     const postUrl = `${window.location.origin}/post.html?id=${postId}`;
+    const plainText = getPlainText(post.text);
 
     document.getElementById('share-twitter').addEventListener('click', () => {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(postTitle)}&url=${encodeURIComponent(postUrl)}`;
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
         window.open(url, '_blank');
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
         const tumblrUrl = new URL('https://www.tumblr.com/widgets/share/tool');
+        tumblrUrl.searchParams.set('posttype', 'text');
+        tumblrUrl.searchParams.set('data-title', post.title);
+        tumblrUrl.searchParams.set('data-content', plainText);
         tumblrUrl.searchParams.set('canonicalUrl', postUrl);
-        tumblrUrl.searchParams.set('title', postTitle);
-        tumblrUrl.searchParams.set('caption', postExcerpt || '');
+        
         window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
     });
     

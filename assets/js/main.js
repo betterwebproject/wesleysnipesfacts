@@ -11,6 +11,7 @@ if (tagSearchInput) {
         if (tagSearchError) tagSearchError.textContent = '';
     });
 }
+
 // Tag search bar logic with custom error message and substring matching
 const tagSearchForm = document.getElementById('tag-search-form');
 if (tagSearchForm && tagSearchInput && tagSearchError) {
@@ -43,13 +44,15 @@ if (tagSearchForm && tagSearchInput && tagSearchError) {
                 }
             });
     });
-
-    // Clear error when user types
-    tagSearchInput.addEventListener('input', function() {
-        tagSearchError.textContent = '';
-        tagSearchError.innerHTML = '';
-    });
 }
+
+// Helper function to extract plain text from HTML
+function getPlainText(html) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+}
+
 // Attach a single delegated handler for share buttons on #blogroll (persistent)
 const blogrollEl = document.getElementById('blogroll');
 if (blogrollEl) {
@@ -67,8 +70,16 @@ if (blogrollEl) {
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
             window.open(url, '_blank');
         } else if (btn.classList.contains('share-tumblr')) {
-            const url = `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}`;
-            window.open(url, '_blank');
+            const postTextEl = postEl.querySelector('.post-text');
+            const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
+            
+            const tumblrUrl = new URL('https://www.tumblr.com/widgets/share/tool');
+            tumblrUrl.searchParams.set('posttype', 'text');
+            tumblrUrl.searchParams.set('data-title', title);
+            tumblrUrl.searchParams.set('data-content', postText);
+            tumblrUrl.searchParams.set('canonicalUrl', postUrl);
+            
+            window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
         } else if (btn.classList.contains('copy-link')) {
             navigator.clipboard.writeText(postUrl).then(() => {
                 alert('Link copied to clipboard!');
@@ -78,6 +89,7 @@ if (blogrollEl) {
         }
     });
 }
+
 // Local cache settings for posts.json
 const POSTS_CACHE_KEY = 'wsf_posts_cache_v1';
 const POSTS_CACHE_TTL = 1000 * 60 * 60; // 1 hour
@@ -86,15 +98,12 @@ let postsData = null; // In-memory cache for JSON data
 let offset = 0;
 const limit = 20;
 let isLoading = false;
-// reset any transient flags for this load
 
 async function loadPosts() {
     if (isLoading) return; 
     isLoading = true;
 
     try {
-    // reset any transient flags for this load
-
         // Load postsData from localStorage cache if available and fresh.
         if (!postsData) {
             try {
@@ -158,7 +167,7 @@ async function loadPosts() {
             return;
         }
 
-    // Build all post nodes into a DocumentFragment and append once to minimize reflows
+        // Build all post nodes into a DocumentFragment and append once to minimize reflows
         const fragment = document.createDocumentFragment();
 
         posts.forEach(post => {
@@ -184,12 +193,9 @@ async function loadPosts() {
             fragment.appendChild(postElement);
         });
 
-        // Append fragment once to DOM and reveal footer; simple CSS handles
-        // the visual fade-in (keeps JS minimal and predictable).
+        // Append fragment once to DOM and reveal footer
         blogrollEl.appendChild(fragment);
         revealFooterOnce();
-
-        
 
         offset += posts.length;
         isLoading = false;

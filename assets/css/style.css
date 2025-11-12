@@ -171,7 +171,6 @@ header sup {
 
 .header-small sup {
     font-size: calc(var(--heading-1) * .25);
-    color: var(--accent);
 }
 
 nav ul {
@@ -187,7 +186,7 @@ nav ul li:not(:last-of-type) {
     margin-inline-end: 1rem;
 }
 
-header + main .page-title{
+header + main .page-title {
     margin-block-start: var(--big-gap);
 }
 
@@ -249,12 +248,14 @@ header + main .page-title{
     color: var(--accent);
 }
 
-.tag-results-heading, .post-results-heading {
+.tag-results-heading, 
+.post-results-heading {
     margin-block-start: var(--big-gap);
     margin-block-end: var(--big-gap);
 }
 
-.tag-results-heading .tag-term, .post-results-heading .post-term {
+.tag-results-heading .tag-term, 
+.post-results-heading .post-term {
     color: var(--accent);
 }
 
@@ -288,8 +289,11 @@ header + main .page-title{
     font-size: var(--micro);
 }
 
-.post-notes sup {
+.post-text sup,
+.post-notes sup  {
     margin-right: .25rem;
+    line-height: 1;
+    color: var(--accent);
 }
 
 .post-tags {
@@ -354,11 +358,6 @@ button {
     font-size: var(--micro);
 }  
 
-sup {
-    color: var(--accent);
-    line-height: 1;
-}
-
 a {
     color: var(--accent);
     text-decoration: none;
@@ -396,7 +395,7 @@ hr {
     background: transparent;
 }
 
-hr.narrow {
+hr.mini-padding {
     margin-block-start: 2rem;
     margin-block-end: 2rem;
 }
@@ -437,9 +436,9 @@ footer a {
     background: transparent;
 }
 
-/* Mobile */
 @media only screen and (max-width: 640px) {
-    .site-title-big, header sup {
+    .site-title-big, 
+    .site-title-big sup {
         color: var(--primary);
     }
 
