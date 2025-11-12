@@ -121,19 +121,15 @@ function updateShareLinks(post) {
     console.log('Share data:', { title: post.title, plainText, postUrl }); // Debug log
 
     document.getElementById('share-twitter').addEventListener('click', () => {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
+        // X/Twitter now uses x.com/intent/tweet (not /post)
+        const tweetText = `${post.title} ${postUrl}`;
+        const url = `https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
         window.open(url, '_blank', 'noopener,noreferrer');
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
-        // Tumblr share tool with proper parameters
-        const tumblrParams = new URLSearchParams({
-            'canonicalUrl': postUrl,
-            'title': post.title,
-            'caption': plainText,
-            'posttype': 'link'
-        });
-        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?${tumblrParams.toString()}`;
+        // Tumblr share tool - use data-title, data-content format
+        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(plainText)}`;
         window.open(tumblrUrl, '_blank', 'width=540,height=600');
     });
     

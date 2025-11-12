@@ -69,20 +69,16 @@ if (blogrollEl) {
         const title = titleLink ? titleLink.textContent.trim() : '';
 
         if (btn.classList.contains('share-twitter')) {
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
+            // X/Twitter now uses x.com/intent/tweet (not /post)
+            const tweetText = `${title} ${postUrl}`;
+            const url = `https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
             window.open(url, '_blank', 'noopener,noreferrer');
         } else if (btn.classList.contains('share-tumblr')) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
             
-            // Tumblr share tool with proper parameters
-            const tumblrParams = new URLSearchParams({
-                'canonicalUrl': postUrl,
-                'title': title,
-                'caption': postText,
-                'posttype': 'link'
-            });
-            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?${tumblrParams.toString()}`;
+            // Tumblr share tool - use data-title, data-content format
+            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postText)}`;
             window.open(tumblrUrl, '_blank', 'width=540,height=600');
         } else if (btn.classList.contains('copy-link')) {
             navigator.clipboard.writeText(postUrl).then(() => {
