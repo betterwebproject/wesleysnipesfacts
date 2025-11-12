@@ -76,8 +76,9 @@ if (blogrollEl) {
             const postTextEl = postEl.querySelector('.post-text');
             const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
             
-            // Tumblr Link post: title=title, content=URL, caption=description
-            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(postText)}`;
+            // Tumblr Link post: include post title in caption since OG tags override title param
+            const captionWithTitle = `<strong>${title}</strong><br><br>${postText}`;
+            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
             window.open(tumblrUrl, '_blank', 'width=540,height=600');
         } else if (btn.classList.contains('copy-link')) {
             navigator.clipboard.writeText(postUrl).then(() => {

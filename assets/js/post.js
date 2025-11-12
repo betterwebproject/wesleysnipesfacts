@@ -128,8 +128,9 @@ function updateShareLinks(post) {
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
-        // Tumblr Link post: title=title, content=URL, caption=description
-        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(plainText)}`;
+        // Tumblr Link post: include post title in caption since OG tags override title param
+        const captionWithTitle = `<strong>${post.title}</strong><br><br>${plainText}`;
+        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
         window.open(tumblrUrl, '_blank', 'width=540,height=600');
     });
     
