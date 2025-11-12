@@ -20,6 +20,22 @@
             <img class="header-image" src="/assets/graphics/header_img.webp" alt="Header image"/>
             <a href="/"><h1 class="site-title-big">Wesley Snipes Facts<sup>TM</sup></h1></a>
             <h2 class="site-description">Your Home for Wesley Snipes Facts Checks!</h2>
+            <nav>
+              <ul class="margins-off">
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/death">Death</a>
+                </li>
+                <li>
+                  <a href="/taxes">Taxes</a>
+                </li>
+                <li>
+                  <a href="/faq">FAQ</a>   
+                </li>
+              </ul>
+            </nav>
           </header>
           
           <div class="info">
