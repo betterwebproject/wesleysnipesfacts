@@ -121,20 +121,20 @@ function updateShareLinks(post) {
     console.log('Share data:', { title: post.title, plainText, postUrl }); // Debug log
 
     document.getElementById('share-twitter').addEventListener('click', () => {
-        const url = `https://x.com/intent/post?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
-        console.log('Twitter URL:', url); // Debug log
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
         window.open(url, '_blank', 'noopener,noreferrer');
     });
 
     document.getElementById('share-tumblr').addEventListener('click', () => {
-        const tumblrUrl = new URL('https://www.tumblr.com/widgets/share/tool');
-        tumblrUrl.searchParams.set('posttype', 'text');
-        tumblrUrl.searchParams.set('data-title', post.title);
-        tumblrUrl.searchParams.set('data-content', plainText);
-        // Don't include canonicalUrl - it causes Tumblr to use OG tags instead
-        
-        console.log('Tumblr URL:', tumblrUrl.toString()); // Debug log
-        window.open(tumblrUrl.toString(), '_blank', 'width=600,height=400');
+        // Tumblr share tool with proper parameters
+        const tumblrParams = new URLSearchParams({
+            'canonicalUrl': postUrl,
+            'title': post.title,
+            'caption': plainText,
+            'posttype': 'link'
+        });
+        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?${tumblrParams.toString()}`;
+        window.open(tumblrUrl, '_blank', 'width=540,height=600');
     });
     
     document.getElementById('copyLink').addEventListener('click', () => {
