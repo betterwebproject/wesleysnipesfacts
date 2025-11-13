@@ -90,11 +90,11 @@ async function loadTagPosts() {
                 <hr aria-hidden="true">
                 <div class="share-container">
                     <p aria-hidden="true">Share this fact!</p>
-                    <div class="share-buttons margins-off">
-                        <button class="share-button share-twitter" type="button" aria-label="Share to Twitter>Twitter</button>
-                        <button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button>
-                        <button class="share-button copy-link" type="button" aria-label="Copy lnik">Web</button>
-                    </div>
+                    <ul class="share-buttons margins-off">
+                        <li><button id="share-twitter" class="share-button" type="button" aria-label="Share to Twitter">Twitter</button></li>
+                        <li><button id="share-tumblr" class="share-button" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
+                        <li><button id="copyLink" class="share-button copy" type="button" aria-label="Copy link">Web</button></li>
+                    </ul>
                 </div>
             `;
             document.getElementById('tag-posts').appendChild(postElement);

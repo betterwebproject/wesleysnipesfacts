@@ -356,6 +356,7 @@ header + main .page-title {
     flex-wrap: wrap;
     gap: 1rem;
     margin-block-start: unset;
+    list-style: none;
 }
 
 button {

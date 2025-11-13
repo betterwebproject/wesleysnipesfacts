@@ -188,11 +188,11 @@ async function loadPosts() {
                 <hr aria-hidden="true">
                 <div class="share-container">
                     <p aria-hidden="true">Share this fact!</p>
-                    <div class="share-buttons margins-off">
-                        <button class="share-button share-twitter" type="button" aria-label="Share to Twitter>Twitter</button>
-                        <button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button>
-                        <button class="share-button copy-link" type="button" aria-label="Copy lnik">Web</button>
-                    </div>
+                    <ul class="share-buttons margins-off">
+                        <li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li>
+                        <li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
+                        <li><button class="share-button copy-link" type="button" aria-label="Copy link">Web</button></li>
+                    </ul>
                 </div>
             `;
             fragment.appendChild(postElement);
