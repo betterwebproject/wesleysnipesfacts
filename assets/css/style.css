@@ -88,7 +88,7 @@ main * + * {
 }
 
 .header-big > * + * {
-    margin-block-start: calc(var(--gap) * 1.5);
+    margin-block-start: calc(var(--gap) * 1.75);
 } 
 
 .header-small > * + * {
@@ -224,8 +224,8 @@ header + main .page-title {
 
 #tag-search-form {
     display: block;
-    margin-block-start: var(--big-gap);
-    margin-block-end: calc(var(--big-gap) + 1.25rem);
+    margin-block-start: 4rem;
+    margin-block-end: 4.75rem;
 }
 
 #tag-search-input {
