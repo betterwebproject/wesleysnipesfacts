@@ -184,7 +184,7 @@ async function loadPosts() {
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
                 <p class="post-text">${post.text}</p>
                 <p class="post-notes">${post.notes}</p>
-                <p class="post-tags margins-off">${post.tags.map(tag => `<a href="tag.html?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a>`).join('')}</p>
+                <ul class="post-tags margins-off" aria-label="Tags">${post.tags.map(tag => `<li><a href="tag.html?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a></li>`).join('')}</ul>
                 <hr aria-hidden="true">
                 <div class="share-container">
                     <p aria-hidden="true">Share this fact!</p>

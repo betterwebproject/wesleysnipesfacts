@@ -86,7 +86,7 @@ async function loadTagPosts() {
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
                 <p class="post-text">${highlightedText}</p> 
                 <p class="post-notes">${highlightedNotes}</p>
-                <p class="post-tags margins-off">${post.tags.map(t =>`<a href="tag.html?tag=${encodeURIComponent(t)}" class="tag${t === tag ? ' active-tag' : ''}">${t}</a>`).join('')}</p>
+                <ul class="post-tags margins-off" aria-label="Tags">${post.tags.map(t =>`<li><a href="tag.html?tag=${encodeURIComponent(t)}" class="tag${t === tag ? ' active-tag' : ''}">${t}</a></li>`).join('')}</ul>
                 <hr aria-hidden="true">
                 <div class="share-container">
                     <p aria-hidden="true">Share this fact!</p>
