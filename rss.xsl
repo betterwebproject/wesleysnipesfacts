@@ -15,17 +15,17 @@
         <style>main{max-width:56ch}.info{margin-block-start:var(--big-gap);margin-block-end:calc(var(--big-gap) * 1.25)}.subscribe{width:fit-content;padding:.75rem var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:var(--micro);word-break:break-all;background:var(--post-background)}.item{padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start:calc(var(--big-gap) * 2)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
       </head>
       <body>
-        <main>
-          <header class="header-small">
-            <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500"/>
-            <a class="margins-off" href="/">
-              <svg:svg viewBox="0 0 25 21.4" role="img" aria-hidden="true">
-                <svg:path fill="currentColor" d="M.523 9.449a1.79 1.79 0 0 0 0 2.528l8.929 8.928a1.788 1.788 0 0 0 2.528-2.527l-5.888-5.882h17.121c.988 0 1.786-.798 1.786-1.786s-.798-1.786-1.786-1.786H6.098l5.876-5.881A1.788 1.788 0 0 0 9.446.515L.518 9.443z"/>
-              </svg:svg>
-              <span class="site-title-small">Wesley Snipes Facts<sup>TM</sup></span>
-            </a>
-          </header>
-          
+        <a href="#main-content" class="skip-link">Skip to content</a>
+        <header class="header-small">
+          <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500"/>
+          <a class="margins-off" href="/">
+            <svg:svg viewBox="0 0 25 21.4" role="img" aria-hidden="true">
+              <svg:path fill="currentColor" d="M.523 9.449a1.79 1.79 0 0 0 0 2.528l8.929 8.928a1.788 1.788 0 0 0 2.528-2.527l-5.888-5.882h17.121c.988 0 1.786-.798 1.786-1.786s-.798-1.786-1.786-1.786H6.098l5.876-5.881A1.788 1.788 0 0 0 9.446.515L.518 9.443z"/>
+            </svg:svg>
+            <span class="site-title-small">Wesley Snipes Facts<sup>TM</sup></span>
+          </a>
+        </header>
+        <main id="main-content" class="margins-off" tabindex="-1">
           <div class="info">
             <h1>RSS Feed</h1>
             <p>This is an RSS feed. Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
