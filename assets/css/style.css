@@ -457,6 +457,12 @@ footer a {
     background: transparent;
 }
 
+footer svg {
+    width: auto;
+    height: var(--paragraph);
+    margin-left: .15rem;
+}
+
 .skip-link {
     position: absolute;
     top: -999px;
