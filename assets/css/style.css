@@ -178,13 +178,16 @@ header sup {
     font-size: calc(var(--heading-1) * .25);
 }
 
+ul {
+    list-style: none;
+}
+
 nav ul {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     font-family: var(--heading);
     font-size: var(--nav-link);
-    list-style: none;
 }
 
 nav ul li:not(:last-of-type) {
@@ -309,7 +312,6 @@ header + main .page-title {
 .post-tags {
     display: flex;
     flex-wrap: wrap;
-    list-style: none;
 }
 
 .tag {
@@ -357,7 +359,6 @@ header + main .page-title {
     flex-wrap: wrap;
     gap: 1rem;
     margin-block-start: unset;
-    list-style: none;
 }
 
 button {
@@ -439,10 +440,13 @@ footer {
 }
 
 .footer-inner {
+    width: 100%;
+}
+
+.footer-inner-links {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     padding: 0 var(--gap);
 }
 

@@ -202,11 +202,23 @@ async function loadPosts() {
         blogrollEl.appendChild(fragment);
         revealFooterOnce();
 
+        // Announce to screen readers
+        const statusEl = document.getElementById('scroll-status');
+        if (statusEl) {
+            statusEl.textContent = `Loaded ${posts.length} more posts`;
+            // Clear after announcement
+            setTimeout(() => { statusEl.textContent = ''; }, 1000);
+        }
+
         offset += posts.length;
         isLoading = false;
 
         if (offset >= postsData.length) {
             window.removeEventListener('scroll', handleScroll);
+            if (statusEl) {
+                statusEl.textContent = 'End of posts';
+                setTimeout(() => { statusEl.textContent = ''; }, 1000);
+            }
         }
     } catch (error) {
         console.error('Error loading posts:', error);
@@ -221,6 +233,7 @@ const footer = document.querySelector('footer');
 // Reveal it only after the first batch of posts is appended so it never appears
 // before blog content is painted.
 let footerRevealed = false;
+let footerVisibilityAnnounced = false;
 
 function revealFooterOnce() {
     if (!footer || footerRevealed) return;
@@ -245,6 +258,16 @@ function handleScroll() {
         if (scrollTop > lastScrollTop) {
             footer.style.transform = 'translateY(0)'; // Show the footer
             footer.style.bottom = '.5rem';
+            
+            // Announce footer visibility to screen readers (once)
+            if (!footerVisibilityAnnounced) {
+                const statusEl = document.getElementById('scroll-status');
+                if (statusEl) {
+                    statusEl.textContent = 'Footer now visible with additional links';
+                    setTimeout(() => { statusEl.textContent = ''; }, 2000);
+                }
+                footerVisibilityAnnounced = true;
+            }
         } else {
             footer.style.transform = 'translateY(100%)'; // Hide the footer
             footer.style.bottom = '-.5rem';

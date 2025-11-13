@@ -46,6 +46,7 @@
     </head>
     <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
+        <a href="#footer" class="skip-link">Skip to footer</a>
         <header class="header-big">
             <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500">
             <h1 class="site-title-big">Wesley Snipes Facts<sup>TM</sup></h1>
@@ -86,11 +87,18 @@
                 </p>
             </div>
             <div id="blogroll"></div>
+            <div role="status" aria-live="polite" aria-atomic="true" class="vh" id="scroll-status"></div>
         </main>
-        <footer style="display: none; transform: translateY(100%);">
+        <footer id="footer" aria-label="Footer links" tabindex="-1" style="display: none; transform: translateY(100%);">
             <div class="footer-inner">
-                <a href="statement">Read Me</a>
-                <a href="/rss.xml">RSS</a>
+                <ul class="footer-inner-links">
+                    <li>
+                        <a href="statement">Read Me</a>
+                    </li>
+                    <li>
+                        <a href="/rss.xml">RSS</a>
+                    </li>
+                </ul>
             </div>
         </footer>   
         <script src="/assets/js/main.js" defer></script>
