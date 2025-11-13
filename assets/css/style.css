@@ -195,13 +195,15 @@ header + main .page-title {
     margin-block-start: var(--big-gap);
 }
 
-#blogroll {
+#blogroll,
+#post-content,
+#tag-posts {
     min-height: 100vh;
     min-height: 100dvh;
-    animation: blogroll-fade 360ms cubic-bezier(.2,.9,.2,1) both;
+    animation: fade-in-content 360ms cubic-bezier(.2,.9,.2,1) both;
 }
 
-@keyframes blogroll-fade {
+@keyframes fade-in-content {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: none; }
 }
@@ -281,8 +283,8 @@ header + main .page-title {
     padding: var(--big-gap) var(--gap);
 }
 
-#tag-posts .post:first-of-type,
-#post-content {
+#post-content,
+#tag-posts .post:first-of-type {
     margin-block-start: unset;
 }
 
