@@ -277,7 +277,8 @@ header + main .page-title {
     padding: var(--big-gap) var(--gap);
 }
 
-#tag-posts .post:first-of-type {
+#tag-posts .post:first-of-type,
+#post-content {
     margin-block-start: unset;
 }
 
