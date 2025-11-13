@@ -19,6 +19,21 @@ function updateMetaTags(post) {
     // Update title
     document.title = `${post.title} - Wesley Snipes Facts™`;
     
+    // Remove noindex meta tag for valid posts
+    const noindexMeta = document.querySelector('meta[name="robots"][content*="noindex"]');
+    if (noindexMeta) {
+        noindexMeta.remove();
+    }
+    
+    // Update or create canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        document.head.appendChild(canonical);
+    }
+    canonical.href = window.location.href;
+    
     // Update or create meta description
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) {

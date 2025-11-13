@@ -47,6 +47,15 @@ async function loadTagPosts() {
                     document.title = `Posts tagged: ${tag}`;
                 }
             }
+            
+            // Update or create canonical URL
+            let canonical = document.querySelector('link[rel="canonical"]');
+            if (!canonical) {
+                canonical = document.createElement('link');
+                canonical.rel = 'canonical';
+                document.head.appendChild(canonical);
+            }
+            canonical.href = window.location.href;
             // Insert heading above results
             document.getElementById('tag-posts').innerHTML = `<h2 class="tag-results-heading">${headingText}</h2>`;
             if (filteredPosts.length === 0) {
