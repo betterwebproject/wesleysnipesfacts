@@ -109,13 +109,13 @@ async function loadPost() {
                 <p class="post-text">${post.text}</p>
                 <p class="post-notes">${post.notes}</p>
                 <p class="post-tags margins-off">${post.tags.map(t => `<a href="tag.html?tag=${encodeURIComponent(t)}" class="tag">${t}</a>`).join('')}</p>
-                <hr>
+                <hr aria-hidden="true">
                 <div class="share-container">
-                    <p>Share this fact!</p>
+                    <p aria-hidden="true">Share this fact!</p>
                     <div class="share-buttons margins-off">
-                        <button id="share-twitter" class="share-button" type="button">Twitter</button>
-                        <button id="share-tumblr" class="share-button" type="button">Tumblr</button>
-                        <button id="copyLink" class="share-button copy" type="button">Web</button>
+                        <button class="share-button share-twitter" type="button" aria-label="Share to Twitter>Twitter</button>
+                        <button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button>
+                        <button class="share-button copy-link" type="button" aria-label="Copy lnik">Web</button>
                     </div>
                 </div>
             `;
