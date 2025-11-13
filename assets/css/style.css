@@ -57,6 +57,10 @@ html {
     background-color: var(--background);
 }
 
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -443,6 +447,27 @@ footer a {
     font-size: var(--nav-link);
     color: var(--accent);
     background: transparent;
+}
+
+.skip-link {
+    position: absolute;
+    top: -999px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--primary);
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+.vh {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
 @media only screen and (max-width: 640px) {
