@@ -20,16 +20,37 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - name: Check for new post title
+        id: new_title
+        run: |
+          git fetch origin ${{ github.event.before }}
+          # Get titles from previous commit
+          git checkout ${{ github.event.before }}
+          jq -r '.[].title' posts.json | sort > /tmp/old_titles.txt
+          # Get titles from current commit
+          git checkout ${{ github.sha }}
+          jq -r '.[].title' posts.json | sort > /tmp/new_titles.txt
+          # Compare
+          if comm -13 /tmp/old_titles.txt /tmp/new_titles.txt | grep .; then
+            echo "new_title=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new title detected, exiting."
+            echo "new_title=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node.js
+        if: steps.new_title.outputs.new_title == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
+
       - name: Generate RSS feed
+        if: steps.new_title.outputs.new_title == 'true'
         run: node assets/js/generate_rss.js
-      
+
       - name: Check for changes
+        if: steps.new_title.outputs.new_title == 'true'
         id: check_changes
         run: |
           if git diff --quiet rss.xml; then
@@ -37,7 +58,7 @@ jobs:
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changed == 'true'
         run: |
