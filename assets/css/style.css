@@ -88,7 +88,7 @@ main * + * {
 }
 
 .header-big > * + * {
-    margin-block-start: calc(var(--gap) * 1.75);
+    margin-block-start: 2.5rem;
 } 
 
 .header-small > * + * {
@@ -147,6 +147,7 @@ p:not(.post p):not(#post-content p) {
 }
 
 .site-description {
+    margin-block-start: 1.65rem;
     font-family: var(--italic);
     font-size: var(--subtitle);
     color: var(--primary);
@@ -485,6 +486,10 @@ footer svg {
 }
 
 @media only screen and (max-width: 640px) {
+    .header-big > * + * {
+    margin-block-start: 2rem;
+    } 
+    
     .site-title-big, 
     .site-title-big sup {
         color: var(--primary);
