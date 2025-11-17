@@ -202,8 +202,6 @@ header + main .page-title {
 #blogroll,
 #post-content,
 #tag-posts {
-    min-height: 100vh;
-    min-height: 100dvh;
     animation: fade-in-content 360ms cubic-bezier(.2,.9,.2,1) both;
 }
 
