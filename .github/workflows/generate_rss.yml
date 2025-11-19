@@ -24,9 +24,8 @@ jobs:
       - name: Check for new post title
         id: new_title
         run: |
-          git fetch origin ${{ github.event.before }}
-          # Get titles from previous commit
-          git checkout ${{ github.event.before }}
+          # Get titles from previous commit (HEAD~1)
+          git checkout HEAD~1
           jq -r '.[].title' posts.json | sort > /tmp/old_titles.txt
           # Get titles from current commit
           git checkout ${{ github.sha }}
@@ -35,7 +34,7 @@ jobs:
           if comm -13 /tmp/old_titles.txt /tmp/new_titles.txt | grep .; then
             echo "new_title=true" >> $GITHUB_OUTPUT
           else
-            echo "No new title detected, exiting."
+            echo "No new title detected, skipping RSS generation."
             echo "new_title=false" >> $GITHUB_OUTPUT
           fi
 
