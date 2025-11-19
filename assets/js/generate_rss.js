@@ -52,11 +52,14 @@ const items = posts.map(post => {
     .map(tag => `    <category>${escapeXml(tag)}</category>`)
     .join('\n');
   
+  // Use post's date if available, otherwise use current date
+  const pubDate = post.date ? new Date(post.date).toUTCString() : new Date().toUTCString();
+  
   return `  <item>
     <title>${escapeXml(post.title)}</title>
     <link>https://wesleysnipesfacts.com/post.html?id=${post.id}</link>
     <guid>https://wesleysnipesfacts.com/post.html?id=${post.id}</guid>
-    <pubDate>${new Date().toUTCString()}</pubDate>
+    <pubDate>${pubDate}</pubDate>
     <description>${escapeXml(description)}</description>
 ${categories}
   </item>`;
