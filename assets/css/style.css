@@ -33,7 +33,7 @@
     --micro: calc(var(--paragraph) * .9);
     --nav-link: calc(1.2rem + .5vw);
     --heading-1: calc(1.6rem + .75vw);
-    --heading-2: calc(var(--heading-1) * .75);
+    --heading-2: calc(var(--heading-1) * .7);
     --primary: #111;
     --accent: brown;
     --border: #DDD;
