@@ -12,7 +12,7 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>  
-        <style>main{max-width:56ch}.info{margin-block-start:var(--big-gap);margin-block-end:4.06rem;position:relative}.subscribe{width:fit-content;padding:.75rem 1rem;margin-block-start:2rem;border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:calc(.9rem + .15vw);word-break:break-all;background:var(--post-background);cursor:pointer;transition:background .2s ease;position:relative}.subscribe:hover{background:var(--border)}.subscribe:active{transform:scale(.98)}.copy-tooltip{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#000;color:#fff;padding:1rem 2rem;border-radius:.5rem;font-size:1.2rem;font-weight:bold;z-index:9999;opacity:0;pointer-events:none;transition:opacity .2s ease}.copy-tooltip.show{opacity:.95}.item{padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start:calc(var(--big-gap) * 2)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
+        <style>main{max-width:56ch}.info{margin-block-start:var(--big-gap);margin-block-end:4.06rem}.subscribe{width:max-content;padding:.75rem 1rem;margin-block-start:2rem;border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:calc(.9rem + .15vw);word-break:break-all;background:var(--post-background);cursor:pointer;transition:background .2s ease}.subscribe:hover{background:var(--border)}.item{padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start:calc(var(--big-gap) * 2)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
       </head>
       <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
@@ -29,8 +29,7 @@
           <div class="info">
             <h1>RSS Feed</h1>
             <p>This is an RSS feed. Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
-            <p class="subscribe"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
-            <div class="copy-tooltip" id="copyTooltip">✓ Copied!</div>
+            <p class="subscribe" onclick="copyToClipboard(this)"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
           </div>
           
           <xsl:for-each select="rss/channel/item">
@@ -53,31 +52,22 @@
           
         </main>
         <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const subscribeElement = document.querySelector('.subscribe');
-            const tooltip = document.getElementById('copyTooltip');
-            if (subscribeElement) {
-              subscribeElement.addEventListener('click', function() {
-                const text = this.textContent.trim();
-                navigator.clipboard.writeText(text).then(function() {
-                  tooltip.classList.add('show');
-                  setTimeout(function() {
-                    tooltip.classList.remove('show');
-                  }, 1500);
-                }).catch(function(err) {
-                  tooltip.textContent = '✗ Failed to copy';
-                  tooltip.style.background = '#d00';
-                  tooltip.classList.add('show');
-                  setTimeout(function() {
-                    tooltip.classList.remove('show');
-                    tooltip.textContent = '✓ Copied!';
-                    tooltip.style.background = '#000';
-                  }, 1500);
-                  console.error('Failed to copy text: ', err);
-                });
-              });
-            }
-          });
+          function copyToClipboard(element) {
+            const text = element.textContent.trim();
+            const originalText = text;
+            const width = element.offsetWidth;
+            
+            navigator.clipboard.writeText(text).then(function() {
+              element.style.width = width + 'px';
+              element.textContent = 'Copied!';
+              setTimeout(function() {
+                element.textContent = originalText;
+                element.style.width = '';
+              }, 1500);
+            }).catch(function(err) {
+              console.error('Failed to copy:', err);
+            });
+          }
         </script>
       </body>
     </html>
