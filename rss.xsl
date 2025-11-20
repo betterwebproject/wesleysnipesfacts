@@ -59,7 +59,7 @@
             
             navigator.clipboard.writeText(text).then(function() {
               element.style.width = width + 'px';
-              element.textContent = 'URL Copied!👍';
+              element.textContent = 'URL copied!👍';
               setTimeout(function() {
                 element.textContent = originalText;
                 element.style.width = '';
