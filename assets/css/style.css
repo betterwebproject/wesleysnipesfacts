@@ -29,12 +29,11 @@
     --body: 'Triptych Roman';
     --italic: 'Triptych Italick';
     --heading: 'Triptych Grotesque';
-    --paragraph: calc(1.09rem + .35vw);
-    --micro: calc(var(--paragraph) * .85);
+    --paragraph: calc(1.06rem + .35vw);
+    --micro: calc(var(--paragraph) * .9);
     --nav-link: calc(1.2rem + .5vw);
-    --title: calc(1.5rem + 1vw);
-    --subtitle: calc(var(--title) * .56);
     --heading-1: calc(1.6rem + .75vw);
+    --heading-2: calc(var(--heading-1) * .75);
     --primary: #111;
     --accent: brown;
     --border: #DDD;
@@ -133,7 +132,7 @@ h1 {
 h2 {
     font-family: var(--italic);
     font-weight: normal;
-    font-size: calc(var(--heading-1) * .65);
+    font-size: var(--heading-2);
     line-height: 1.4;
 }
 
@@ -148,8 +147,7 @@ p:not(.post p):not(#post-content p) {
 
 .site-description {
     margin-block-start: 1.65rem;
-    font-family: var(--italic);
-    font-size: var(--subtitle);
+    font-size: calc(var(--heading-1) * .675);
     color: var(--primary);
 }
 
@@ -160,23 +158,23 @@ p:not(.post p):not(#post-content p) {
 
 .site-title-small {
     font-family: var(--heading);
-    font-size: calc(var(--heading-1) * .7);
+    font-size: var(--heading-2);
 }
 
 .header-small svg {
     width: auto;
-    height: calc(var(--heading-1) * .55);
+    height: calc(var(--heading-2) * .7);
     line-height: normal;
 }
 
 header sup {
-    font-size: calc(var(--heading-1) * .35);
+    font-size: calc(var(--heading-1) * .3);
     line-height: normal;
     vertical-align: text-top;
 }
 
 .header-small sup {
-    font-size: calc(var(--heading-1) * .25);
+    font-size: calc(var(--heading-2) * .3);
 }
 
 ul {
@@ -282,7 +280,7 @@ header + main .page-title {
 
 .post.message {
     margin-block-start: unset;
-    padding: var(--big-gap) 2rem;
+    padding: calc(var(--big-gap) * 1.25) 2rem;
 }
 
 #post-content,
@@ -495,5 +493,15 @@ footer svg {
 
     .site-description {
         display: none;
+    }
+
+    .post,
+    #post-content {
+        padding: var(--big-gap)  1.5rem;
+    }
+
+    .post.message {
+        margin-block-start: unset;
+        padding: var(--big-gap) 1.5rem;
     }
 }
