@@ -415,10 +415,6 @@ hr.mini-padding {
     margin-block-end: 2rem;
 }
 
-.space {
-    width: .15rem;
-}
-
 footer {
     display: flex;
     align-items: center;
