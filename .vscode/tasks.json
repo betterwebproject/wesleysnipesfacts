@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate RSS",
+      "type": "shell",
+      "command": "node assets/js/generate_rss.js",
+      "group": "build"
+    }
+  ]
+}
