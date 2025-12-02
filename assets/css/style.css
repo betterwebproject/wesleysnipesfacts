@@ -258,7 +258,7 @@ main > div.page {
 }
 
 .post > *:not(hr) + *:not(hr),
-.page > * + * {
+.page > *:not(hr) + *:not(hr) {
     margin-block-start: var(--space-1);
 }
 
@@ -466,6 +466,10 @@ footer a {
 }
 
 @media only screen and (max-width: 640px) {
+    .header-big > * + * {
+        margin-block-start: var(--space-1);
+    }
+
     .site-title-big, 
     .site-title-big sup {
         color: var(--primary);
