@@ -12,7 +12,7 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>  
-        <style>main{max-width:56ch}.info{margin-block-start:var(--big-gap);margin-block-end:4.06rem}.subscribe{width:max-content;padding:.75rem 1rem;margin-block-start:2rem;border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:calc(.9rem + .15vw);word-break:break-all;background:var(--post-background);cursor:pointer;transition:background .2s ease}.subscribe:hover{background:var(--border)}.item{padding:var(--big-gap) var(--gap);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start:calc(var(--big-gap) * 2)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
+        <style>main{max-width:56ch}.info{margin-block-end:var(--space-3)}.info>*+*,.item>*+*{margin-block-start: var(--space-1)}.subscribe{width:max-content;padding:.75rem 1rem;margin-block-start:var(--space-2);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);font-family:monospace;font-size:calc(.9rem + .15vw);word-break:break-all;background:var(--post-background);cursor:pointer;transition:background .2s ease}.subscribe:hover{background:var(--border)}.item{padding:calc(var(--space-2) + 1vw) calc(var(--space-1) + 1vw);border:1px solid var(--border);border-radius:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);background-color:var(--post-background)}.item+.item{margin-block-start: calc(var(--space-3) + 2vw)}.item-title{font-family:var(--heading);font-size:var(--heading-1)}.tags{display:flex;flex-wrap:wrap}.tag{color:var(--accent)}</style>
       </head>
       <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
@@ -26,7 +26,7 @@
           </a>
         </header>
         <main id="main-content" class="margins-off" tabindex="-1">
-          <div class="info">
+          <div class="info page">
             <h1>RSS Feed</h1>
             <p>This is an RSS feed. Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
             <p class="subscribe" onclick="copyToClipboard(this)"><xsl:value-of select="rss/channel/atom:link/@href"/></p>
