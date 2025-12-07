@@ -21,15 +21,15 @@
       <body>
         <a href="#main-content" class="skip-link">Skip to content</a>
         <header class="header-small">
-          <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500" fetchpriority="high"/>
-          <a class="margins-off" href="/">
+          <img class="header-image" src="/assets/graphics/header_img.webp" alt="Image of Wesley Snipes, with Kwanzaa facepaint and Egyptian rod, in a jail cell for tax evasion" width="500" height="500" decoding="async"/>
+          <a href="/">
             <svg:svg viewBox="0 0 25 21.4" role="img" aria-hidden="true">
               <svg:path fill="currentColor" d="M.523 9.449a1.79 1.79 0 0 0 0 2.528l8.929 8.928a1.788 1.788 0 0 0 2.528-2.527l-5.888-5.882h17.121c.988 0 1.786-.798 1.786-1.786s-.798-1.786-1.786-1.786H6.098l5.876-5.881A1.788 1.788 0 0 0 9.446.515L.518 9.443z"/>
             </svg:svg>
             <span class="site-title-small">Wesley Snipes Facts<sup>TM</sup></span>
           </a>
         </header>
-        <main id="main-content" class="margins-off" tabindex="-1">
+        <main id="main-content" tabindex="-1">
           <div class="info page">
             <h1>RSS Feed</h1>
             <p>This is an RSS feed. Copy the URL below into your RSS reader to subscribe. Or scroll down for the latest facts.🔥</p>
@@ -45,7 +45,7 @@
                 <xsl:value-of select="description" disable-output-escaping="yes"/>
               </div>
               <xsl:if test="category">
-                <div class="tags margins-off">
+                <div class="tags">
                   <xsl:for-each select="category">
                     <span class="tag"><xsl:value-of select="."/></span>
                   </xsl:for-each>

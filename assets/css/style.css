@@ -112,6 +112,10 @@ img.header-image {
     aspect-ratio: 1/1;
 }
 
+img:-moz-loading {
+    visibility: hidden;
+}
+
 h1 {
     font-family: var(--heading);
     font-size: var(--heading-1);
