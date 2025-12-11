@@ -20,6 +20,49 @@ function highlightTagInText(text, tag) {
     return text.replace(regex, '<span class="highlight-tag">$1</span>');
 }
 
+// Function to make footnote references accessible
+function makeFootnotesAccessible(postElement, postId) {
+    const postText = postElement.querySelector('.post-text');
+    const postNotes = postElement.querySelector('.post-notes');
+    
+    if (!postText || !postNotes) return;
+    
+    // Find all sup elements in post text (footnote references)
+    const footnoteRefs = postText.querySelectorAll('sup');
+    
+    // Find all sup elements in post notes (footnote definitions)
+    const footnoteDefs = postNotes.querySelectorAll('sup');
+    
+    // Make each footnote reference accessible
+    footnoteRefs.forEach((sup, index) => {
+        const footnoteNum = sup.textContent.trim();
+        
+        // Create unique IDs using postId to avoid conflicts
+        const uniqueRefId = `fnref-${postId}-${footnoteNum}`;
+        const uniqueDefId = `fn-${postId}-${footnoteNum}`;
+        
+        // Wrap the sup content in a link
+        const link = document.createElement('a');
+        link.href = `#${uniqueDefId}`;
+        link.setAttribute('role', 'doc-noteref');
+        link.setAttribute('aria-label', `Footnote ${footnoteNum}`);
+        link.id = uniqueRefId;
+        link.textContent = sup.textContent;
+        
+        // Replace sup content with the link
+        sup.textContent = '';
+        sup.appendChild(link);
+        
+        // If there's a corresponding definition, set it up
+        if (footnoteDefs[index]) {
+            const def = footnoteDefs[index];
+            def.id = uniqueDefId;
+            def.setAttribute('role', 'doc-endnote');
+            link.setAttribute('aria-describedby', uniqueDefId);
+        }
+    });
+}
+
 async function loadTagPosts() {
     if (isLoading) return;
     isLoading = true;
@@ -97,6 +140,10 @@ async function loadTagPosts() {
                     </ul>
                 </div>
             `;
+            
+            // Make footnotes accessible after creating the element
+            makeFootnotesAccessible(postElement, post.id);
+            
             document.getElementById('tag-posts').appendChild(postElement);
         });
 

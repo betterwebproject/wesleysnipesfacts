@@ -8,6 +8,45 @@ function getPlainText(html) {
     return tempDiv.textContent || tempDiv.innerText || '';
 }
 
+// Function to make footnote references accessible
+function makeFootnotesAccessible() {
+    const postText = document.querySelector('.post-text');
+    const postNotes = document.querySelector('.post-notes');
+    
+    if (!postText || !postNotes) return;
+    
+    // Find all sup elements in post text (footnote references)
+    const footnoteRefs = postText.querySelectorAll('sup');
+    
+    // Find all sup elements in post notes (footnote definitions)
+    const footnoteDefs = postNotes.querySelectorAll('sup');
+    
+    // Make each footnote reference accessible
+    footnoteRefs.forEach((sup, index) => {
+        const footnoteNum = sup.textContent.trim();
+        
+        // Wrap the sup content in a link
+        const link = document.createElement('a');
+        link.href = `#fn-${footnoteNum}`;
+        link.setAttribute('role', 'doc-noteref');
+        link.setAttribute('aria-label', `Footnote ${footnoteNum}`);
+        link.id = `fnref-${footnoteNum}`;
+        link.textContent = sup.textContent;
+        
+        // Replace sup content with the link
+        sup.textContent = '';
+        sup.appendChild(link);
+        
+        // If there's a corresponding definition, set it up
+        if (footnoteDefs[index]) {
+            const def = footnoteDefs[index];
+            def.id = `fn-${footnoteNum}`;
+            def.setAttribute('role', 'doc-endnote');
+            link.setAttribute('aria-describedby', `fn-${footnoteNum}`);
+        }
+    });
+}
+
 // Function to update SEO meta tags
 function updateMetaTags(post) {
     // Extract plain text from HTML for description
@@ -119,6 +158,10 @@ async function loadPost() {
                     </ul>
                 </div>
             `;
+            
+            // Make footnotes accessible after content is loaded
+            makeFootnotesAccessible();
+            
             updateShareLinks(post);
         } else {
             document.getElementById('post-content').innerHTML = '<p>Post not found.</p>';
