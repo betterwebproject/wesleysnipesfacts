@@ -138,7 +138,7 @@ h2 {
 }
 
 .header-small > * + * {
-    margin-block-start: calc(var(--space-0) + .5vw);
+    margin-block-start: var(--space-1);
 }
 
 .header-small a {
@@ -149,6 +149,7 @@ h2 {
 .site-title-small {
     font-family: var(--heading);
     font-size: var(--nav-link);
+    line-height: normal;
 }
 
 .header-small svg {
@@ -229,7 +230,7 @@ main > div.page {
 #blogroll,
 #post-content,
 #tag-posts {
-    animation: fade-in-content 360ms cubic-bezier(.2,.9,.2,1) both;
+    animation: fade-in-content 620ms cubic-bezier(.2,.9,.2,1) both;
 }
 
 @keyframes fade-in-content {
@@ -390,8 +391,8 @@ input:focus-visible {
 
 .tag-results-heading, 
 .post-results-heading {
-    margin-block-start: var(--space-3);
-    margin-block-end: var(--space-3);
+    margin-block-start: calc(var(--space-2) + 2vw);
+    margin-block-end: calc(var(--space-2) + 2vw);
 }
 
 .tag-results-heading .tag-term, 
