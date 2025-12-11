@@ -189,6 +189,11 @@ async function loadPosts() {
                     </ul>
                 </div>
             `;
+            // Remove .post-notes if empty
+            const notesEl = postElement.querySelector('.post-notes');
+            if (notesEl && !notesEl.textContent.trim()) {
+                notesEl.remove();
+            }
             
             // Make footnotes accessible after adding to fragment
             makeFootnotesAccessible(postElement, post.id);

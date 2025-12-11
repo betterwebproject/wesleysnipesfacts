@@ -140,6 +140,11 @@ async function loadTagPosts() {
                     </ul>
                 </div>
             `;
+            // Remove .post-notes if empty
+            const notesEl = postElement.querySelector('.post-notes');
+            if (notesEl && !notesEl.textContent.trim()) {
+                notesEl.remove();
+            }
             
             // Make footnotes accessible after creating the element
             makeFootnotesAccessible(postElement, post.id);

@@ -288,6 +288,8 @@ hr {
 }
 
 .post-notes {
+    padding-top: var(--space-0);
+    border-top: 1px solid #808080;
     font-family: var(--italic);
     font-size: var(--micro);
 }

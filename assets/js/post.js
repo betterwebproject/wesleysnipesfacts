@@ -158,6 +158,11 @@ async function loadPost() {
                     </ul>
                 </div>
             `;
+            // Remove .post-notes if empty
+            const notesEl = postContent.querySelector('.post-notes');
+            if (notesEl && !notesEl.textContent.trim()) {
+                notesEl.remove();
+            }
             
             // Make footnotes accessible after content is loaded
             makeFootnotesAccessible();
