@@ -230,6 +230,10 @@ main > div.page {
 #blogroll,
 #post-content,
 #tag-posts {
+    opacity: 0;
+}
+
+.fade-in-ready {
     animation: fade-in-content 620ms cubic-bezier(.2,.9,.2,1) both;
 }
 

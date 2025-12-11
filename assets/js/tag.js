@@ -149,7 +149,17 @@ async function loadTagPosts() {
             // Make footnotes accessible after creating the element
             makeFootnotesAccessible(postElement, post.id);
             
-            document.getElementById('tag-posts').appendChild(postElement);
+            const tagPostsContainer = document.getElementById('tag-posts');
+            tagPostsContainer.appendChild(postElement);
+            
+            // Trigger animation on first load only
+            if (!tagPostsContainer.classList.contains('fade-in-ready')) {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        tagPostsContainer.classList.add('fade-in-ready');
+                    });
+                });
+            }
         });
 
         offset += posts.length;

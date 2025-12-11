@@ -203,6 +203,14 @@ async function loadPosts() {
 
         // Append fragment once to DOM and reveal footer
         blogrollEl.appendChild(fragment);
+        
+        // Trigger animation after layout is stable
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                blogrollEl.classList.add('fade-in-ready');
+            });
+        });
+        
         revealFooterOnce();
 
         // Announce to screen readers

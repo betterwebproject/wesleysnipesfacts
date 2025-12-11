@@ -167,6 +167,13 @@ async function loadPost() {
             // Make footnotes accessible after content is loaded
             makeFootnotesAccessible();
             
+            // Trigger animation after layout is stable
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    postContent.classList.add('fade-in-ready');
+                });
+            });
+            
             updateShareLinks(post);
         } else {
             document.getElementById('post-content').innerHTML = '<p>Post not found.</p>';
