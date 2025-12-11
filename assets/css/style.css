@@ -103,7 +103,7 @@ header > div * + * {
 } 
 
 .header-big > * + * {
-    margin-block-start: var(--space-2);
+    margin-block-start: calc(var(--space-2) + .5vw);
 }
 
 .header-image {
