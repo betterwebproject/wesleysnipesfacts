@@ -424,9 +424,9 @@ footer {
     align-items: center;
     position: sticky;
     bottom: 0;
+    z-index: 999999;
     width: 100%;
     max-width: var(--max-width);
-    z-index: 999999;
     height: 4rem;
     border: 1px solid var(--border);
     border-radius: 1rem;
