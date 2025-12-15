@@ -360,7 +360,7 @@ hr {
 button {
     border-radius: .5rem;
     font-family: var(--heading);
-    color: var(--background);
+    color: var(--post-background);
     background: var(--accent);
     cursor: pointer;
     transition: opacity 0.2s ease;
