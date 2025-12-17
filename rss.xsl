@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content"/>
         <meta name="color-scheme" content="light dark"/>
-        <link rel="preload" fetchpriority="high" href="/assets/graphics/header_img.webp" as="image" type="image/webp"/>
+        <link rel="preload" fetchpriority="high" href="/assets/images/header_img.webp" as="image" type="image/webp"/>
         <link rel="preload" href="/assets/type/triptych_grotesque.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
         <link rel="preload" href="/assets/type/triptych_roman.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
         <link rel="preload" href="/assets/type/triptych_italick.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>

@@ -107,7 +107,7 @@ header > div * + * {
 }
 
 .header-image {
-    background:url(/assets/graphics/header_img.webp) center/cover no-repeat;
+    background:url(/assets/images/header_img.webp) center/cover no-repeat;
     width: 100%;
     max-width: 200px;
     aspect-ratio: 1/1;
