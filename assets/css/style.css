@@ -396,21 +396,14 @@ input:focus-visible {
     border-radius: .25rem;
 }
 
-.tag-results-heading, 
-.post-results-heading {
-    margin-block-start: var(--space-2);
-    margin-block-end: var(--space-2);
-}
-
 .tag-results-heading .tag-term, 
 .post-results-heading .post-term {
     color: var(--accent);
 }
 
-#faq li + li {
-    margin-block-start: var(--space-2); 
-}
-
+.tag-results-heading, 
+.post-results-heading,
+#faq li + li,
 #faq li:first-of-type {
     margin-block-start: var(--space-2);
 }
@@ -491,7 +484,7 @@ footer a {
     }
 
     .post {
-        padding: calc(var(--space-2) + 1vw) 1.5rem;
+        padding: var(--space-2) 1.5rem;
     }
 
     .footer-inner-links {
