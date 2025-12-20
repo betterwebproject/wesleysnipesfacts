@@ -24,10 +24,10 @@
 
 :root {
     --max-width: 56ch;
-    --ratio: 1.7;
+    --ratio: 1.6;
     --space--2: calc(var(--space--1) / var(--ratio));
     --space--1: calc(var(--space-0) / var(--ratio));
-    --space-0: 1rem;
+    --space-0: calc(1rem + .35vw);
     --space-1: calc(var(--space-0) * var(--ratio));
     --space-2: calc(var(--space-1) * var(--ratio));
     --space-3: calc(var(--space-2) * var(--ratio));
@@ -103,7 +103,7 @@ header > div * + * {
 } 
 
 .header-big > * + * {
-    margin-block-start: calc(var(--space-2) + .5vw);
+    margin-block-start: var(--space-2);
 }
 
 .header-image {
@@ -221,7 +221,7 @@ main {
 
 main.index > div,
 .post + .post {
-    margin-block-start: calc(var(--space-3) + 1vw);
+    margin-block-start: var(--space-3);
 }
 
 main > div.page {
@@ -258,7 +258,7 @@ main > div.page {
 .post {
     width: 100%;
     max-width: var(--max-width);
-    padding: calc(var(--space-2) + 1vw) 2.25rem;
+    padding: var(--space-2) 2.25rem;
     border: 1px solid var(--border);
     border-radius: 1rem;
     box-shadow: 0 2px 6px rgba(0,0,0,.05);
@@ -398,8 +398,8 @@ input:focus-visible {
 
 .tag-results-heading, 
 .post-results-heading {
-    margin-block-start: calc(var(--space-2) + 2vw);
-    margin-block-end: calc(var(--space-2) + 2vw);
+    margin-block-start: var(--space-2);
+    margin-block-end: var(--space-2);
 }
 
 .tag-results-heading .tag-term, 
@@ -408,7 +408,7 @@ input:focus-visible {
 }
 
 #faq li + li {
-    margin-block-start: calc(var(--space-2) + 1vw); 
+    margin-block-start: var(--space-2); 
 }
 
 #faq li:first-of-type {
