@@ -396,13 +396,17 @@ input:focus-visible {
     border-radius: .25rem;
 }
 
+.tag-results-heading, 
+.post-results-heading {
+    margin-block-start: var(--space-2);
+    margin-block-end: var(--space-2);
+}
+
 .tag-results-heading .tag-term, 
 .post-results-heading .post-term {
     color: var(--accent);
 }
 
-.tag-results-heading, 
-.post-results-heading,
 #faq li + li,
 #faq li:first-of-type {
     margin-block-start: var(--space-2);
