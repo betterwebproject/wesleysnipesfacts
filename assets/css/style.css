@@ -250,6 +250,7 @@ main > div.page {
 }
 
 .tag-search-container {
+    position: relative;
     width: 100%;
     max-width: var(--max-width);
     margin-inline: auto;
