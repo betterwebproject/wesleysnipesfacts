@@ -8,6 +8,13 @@ let offset = 0;
 const limit = 20;
 let isLoading = false;
 
+// Helper function to extract plain text from HTML
+function getPlainText(html) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+}
+
 // Function to highlight tag text in post content
 function highlightTagInText(text, tag) {
     if (!tag) return text;
@@ -60,6 +67,39 @@ function makeFootnotesAccessible(postElement, postId) {
             def.setAttribute('role', 'doc-endnote');
             link.setAttribute('aria-describedby', uniqueDefId);
         }
+    });
+}
+
+// Function to setup share buttons for a specific post
+function setupShareButtons(postElement, post) {
+    const postUrl = `${window.location.origin}/post.html?id=${post.id}`;
+    const plainText = getPlainText(post.text);
+
+    // Use querySelector to find buttons within this specific post element
+    const twitterBtn = postElement.querySelector('.share-twitter');
+    const tumblrBtn = postElement.querySelector('.share-tumblr');
+    const copyBtn = postElement.querySelector('.copy-link');
+
+    twitterBtn.addEventListener('click', () => {
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`;
+        const popup = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+            window.location.href = url;
+        }
+    });
+
+    tumblrBtn.addEventListener('click', () => {
+        const captionWithTitle = `<h1><strong>${post.title}</strong></h1>${plainText}`;
+        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
+        window.open(tumblrUrl, '_blank', 'width=540,height=600');
+    });
+    
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(postUrl).then(() => {
+            alert('Link copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy link:', err);
+        });
     });
 }
 
@@ -124,6 +164,7 @@ async function loadTagPosts() {
             const highlightedText = tag ? highlightTagInText(post.text, tag) : post.text;
             const highlightedNotes = tag ? highlightTagInText(post.notes, tag) : post.notes;
             
+            // Use classes instead of IDs for share buttons
             postElement.innerHTML = `
                 ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
@@ -134,9 +175,9 @@ async function loadTagPosts() {
                 <div class="share-container">
                     <p aria-hidden="true">Share this fact!</p>
                     <ul class="share-buttons margins-off">
-                        <li><button id="share-twitter" class="share-button" type="button" aria-label="Share to Twitter">Twitter</button></li>
-                        <li><button id="share-tumblr" class="share-button" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
-                        <li><button id="copyLink" class="share-button copy" type="button" aria-label="Copy link">Web</button></li>
+                        <li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li>
+                        <li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
+                        <li><button class="share-button copy copy-link" type="button" aria-label="Copy link">Web</button></li>
                     </ul>
                 </div>
             `;
@@ -148,6 +189,9 @@ async function loadTagPosts() {
             
             // Make footnotes accessible after creating the element
             makeFootnotesAccessible(postElement, post.id);
+            
+            // Setup share buttons for this specific post
+            setupShareButtons(postElement, post);
             
             const tagPostsContainer = document.getElementById('tag-posts');
             tagPostsContainer.appendChild(postElement);
