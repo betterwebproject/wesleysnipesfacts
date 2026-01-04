@@ -80,12 +80,20 @@ body {
     align-items: center;
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 3rem 1rem;
+    padding: 4rem 1rem;
     font-family: var(--body);
     font-size: var(--paragraph);
     line-height: 1.65;
     color: var(--primary);
     background-color: var(--background);
+}
+
+em {
+    font-style: italic;
+}
+
+.block {
+    display: inline-block;
 }
 
 header, 
@@ -132,6 +140,11 @@ h2 {
     color: var(--accent);
 }
 
+header .sup {
+    font-size: .35em;
+    vertical-align: top;
+}
+
 .site-description {
     font-size: calc(var(--heading-1) * .675);
     color: var(--primary);
@@ -152,15 +165,9 @@ h2 {
     line-height: normal;
 }
 
-.header-small svg {
+svg.arrow {
     width: 1em;
     height: auto;
-}
-
-header sup {
-    font-size: .3em;
-    line-height: normal;
-    vertical-align: text-top;
 }
 
 ul {
@@ -280,10 +287,6 @@ p:not(.post p) {
     max-width: 52ch;
 }
 
-em {
-    font-family: var(--italic);
-}
-
 hr {
     max-width: 52ch;
     height: 2px;
@@ -376,8 +379,6 @@ button {
 a {
     color: var(--accent);
     text-decoration: none;
-    pointer-events: auto;
-    cursor: pointer;
     transition: opacity 0.2s ease;
 }
 
@@ -408,12 +409,12 @@ input:focus-visible {
     color: var(--accent);
 }
 
-#faq li + li,
-#faq li:first-of-type {
-    margin-block-start: var(--space-2);
+.list li + li,
+.list li:first-of-type {
+    margin-block-start: var(--space-2); 
 }
 
-#faq li > * + * {
+.list li > * + * {
     margin-block-start: var(--space-0);
 }
 
@@ -479,8 +480,7 @@ footer a {
         margin-block-start: var(--space-1);
     }
 
-    .site-title-big, 
-    .site-title-big sup {
+    .site-title-big {
         color: var(--primary);
     }
 
