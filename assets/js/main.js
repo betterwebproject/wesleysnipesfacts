@@ -98,51 +98,47 @@ function makeFootnotesAccessible(postElement, postId) {
 
 // Attach a single delegated handler for share buttons on #blogroll (persistent)
 const blogrollEl = document.getElementById('blogroll');
-if (blogrollEl) {
-    blogrollEl.addEventListener('click', function(e) {
-        const btn = e.target.closest('.share-twitter, .share-tumblr, .copy-link');
-        if (!btn) return;
-        const postEl = btn.closest('.post');
-        if (!postEl) return;
-        const titleLink = postEl.querySelector('.post-title');
-        const href = titleLink ? titleLink.getAttribute('href') : null;
-        // Remove leading slash from href if present to avoid double slashes
-        const cleanHref = href ? href.replace(/^\//, '') : null;
-        const postUrl = cleanHref ? `${window.location.origin}/${cleanHref}` : window.location.href;
-        const title = titleLink ? titleLink.textContent.trim() : '';
 
-        if (btn.classList.contains('share-twitter')) {
-            // Use twitter.com as per X documentation
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
-            // Open immediately to avoid popup blockers
-            const popup = window.open(url, '_blank', 'noopener,noreferrer');
-            if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-                // Popup was blocked - fallback to direct navigation
-                window.location.href = url;
-            }
-        } else if (btn.classList.contains('share-tumblr')) {
-            const postTextEl = postEl.querySelector('.post-text');
-            const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
-            
-            // Tumblr Link post: use h1 with strong for post title in caption
-            const captionWithTitle = `<h1><strong>${title}</strong></h1>${postText}`;
-            const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
-            window.open(tumblrUrl, '_blank', 'width=540,height=600');
-        } else if (btn.classList.contains('copy-link')) {
-            navigator.clipboard.writeText(postUrl).then(() => {
-                alert('Link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy link:', err);
-            });
+// Helper function to handle share button clicks
+function handleShareClick(e) {
+    const btn = e.currentTarget;
+    const postEl = btn.closest('.post');
+    if (!postEl) return;
+    
+    const titleLink = postEl.querySelector('.post-title a');
+    const href = titleLink ? titleLink.getAttribute('href') : null;
+    const cleanHref = href ? href.replace(/^\//, '') : null;
+    const postUrl = cleanHref ? `${window.location.origin}/${cleanHref}` : window.location.href;
+    const title = titleLink ? titleLink.textContent.trim() : '';
+
+    if (btn.classList.contains('share-twitter')) {
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`;
+        const popup = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+            window.location.href = url;
         }
-    });
+    } else if (btn.classList.contains('share-tumblr')) {
+        const postTextEl = postEl.querySelector('.post-text');
+        const postText = postTextEl ? getPlainText(postTextEl.innerHTML) : '';
+        const captionWithTitle = `<h1><strong>${title}</strong></h1>${postText}`;
+        const tumblrUrl = `https://www.tumblr.com/widgets/share/tool?posttype=link&canonicalUrl=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(postUrl)}&caption=${encodeURIComponent(captionWithTitle)}`;
+        window.open(tumblrUrl, '_blank', 'width=540,height=600');
+    } else if (btn.classList.contains('copy-link')) {
+        navigator.clipboard.writeText(postUrl).then(() => {
+            alert('Link copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy link:', err);
+        });
+    }
 }
+
 
 // Infinite scroll state
 let postsData = null; // In-memory cache for JSON data
 let offset = 0;
 const limit = 20;
 let isLoading = false;
+let allPostsLoaded = false; // Track if we've loaded all posts
 
 async function loadPosts() {
     if (isLoading) return; 
@@ -161,7 +157,7 @@ async function loadPosts() {
         const posts = postsData.slice(offset, offset + limit);
 
         if (posts.length === 0) {
-            window.removeEventListener('scroll', handleScroll);
+            allPostsLoaded = true;
             isLoading = false;
             return;
         }
@@ -171,10 +167,9 @@ async function loadPosts() {
 
         posts.forEach(post => {
             const postElement = document.createElement('div');
-            postElement.className = 'post';
-            const postUrl = `${window.location.origin}/post.html?id=${post.id}`;
+            postElement.className = 'post gradient-border';
             postElement.innerHTML = `
-                ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
+                ${post.title ? `<h2 class="post-title"><a href="post.html?id=${post.id}">${post.title}</a></h2>` : ''}
                 ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
                 <p class="post-text">${post.text}</p>
                 <p class="post-notes">${post.notes}</p>
@@ -189,11 +184,17 @@ async function loadPosts() {
                     </ul>
                 </div>
             `;
+            
             // Remove .post-notes if empty
             const notesEl = postElement.querySelector('.post-notes');
             if (notesEl && !notesEl.textContent.trim()) {
                 notesEl.remove();
             }
+            
+            // Attach click handlers directly to buttons
+            postElement.querySelectorAll('.share-button').forEach(btn => {
+                btn.addEventListener('click', handleShareClick);
+            });
             
             // Make footnotes accessible after adding to fragment
             makeFootnotesAccessible(postElement, post.id);
@@ -225,7 +226,7 @@ async function loadPosts() {
         isLoading = false;
 
         if (offset >= postsData.length) {
-            window.removeEventListener('scroll', handleScroll);
+            allPostsLoaded = true;
             if (statusEl) {
                 statusEl.textContent = 'End of posts';
                 setTimeout(() => { statusEl.textContent = ''; }, 1000);
@@ -260,8 +261,8 @@ function handleScroll() {
     if (scrollTimeout) return;
     
     scrollTimeout = setTimeout(() => {
-        // Check if we should load more posts
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        // Check if we should load more posts (only if not all loaded)
+        if (!allPostsLoaded && window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
             loadPosts();
         }
 
