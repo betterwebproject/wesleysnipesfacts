@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="https://wesleysnipesfacts.com/rss.xsl"?>
+<?xml-stylesheet type="text/xsl" href="rss.xsl"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Wesley Snipes Facts™</title>
@@ -7,8 +7,19 @@
     <description>Your Home for Wesley Snipes Fact Checks!</description>
     <language>en-US</language>
     <atom:link href="https://wesleysnipesfacts.com/rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 10 Dec 2025 15:52:24 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 10:26:41 GMT</lastBuildDate>
     
+  <item>
+    <title>Fact #547</title>
+    <link>https://wesleysnipesfacts.com/post.html?id=547</link>
+    <guid>https://wesleysnipesfacts.com/post.html?id=547</guid>
+    <pubDate>Thu, 26 Feb 2026 10:16:04 GMT</pubDate>
+    <description>In 1989, Wesley Snipes and NFL running back Bo Jackson teamed up to launch Negresh, a fabric softener whose claim to counteract the effects of bleach and darken white garments was never actually proven. Advertisements for Negresh, which featured Jackson, clad in a baggy white tuxedo, tackling a life...</description>
+    <category>bo jackson</category>
+    <category>elmo</category>
+    <category>negresh</category>
+  </item>
+
   <item>
     <title>Fact #546</title>
     <link>https://wesleysnipesfacts.com/post.html?id=546</link>
@@ -236,19 +247,6 @@
     <category>kevin bacon</category>
     <category>leave the world behind</category>
     <category>sam esmail</category>
-  </item>
-
-  <item>
-    <title>Fact #527</title>
-    <link>https://wesleysnipesfacts.com/post.html?id=527</link>
-    <guid>https://wesleysnipesfacts.com/post.html?id=527</guid>
-    <pubDate>Wed, 19 Nov 2025 09:16:22 GMT</pubDate>
-    <description>In his Snipes memoir, Homunculus, Patton Oswalt writes that Wesley Snipes wasn’t only an expert at jimpenze, an obscure variation of Portuguese dirty thumb wrestling, but that he had possibly invented it.</description>
-    <category>jimpenze</category>
-    <category>homunculus</category>
-    <category>many talents of wesley snipes</category>
-    <category>patton oswalt</category>
-    <category>portuguese thumb wrestling</category>
   </item>
     
   </channel>
