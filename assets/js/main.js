@@ -149,6 +149,23 @@ const limit = 20;
 let isLoading = false;
 let allPostsLoaded = false; // Track if we've loaded all posts
 
+function buildPostMarkup(post) {
+    const titleMarkup = post.title ? `<h2 class="post-title"><a href="post.html?id=${post.id}">${post.title}</a></h2>` : '';
+    const imageMarkup = post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : '';
+    const tags = Array.isArray(post.tags) ? post.tags : [];
+    const tagsMarkup = `<ul class="post-tags margins-off" aria-label="Tags">${tags.map(tag => `<li><a href="tag.html?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a></li>`).join('')}</ul>`;
+
+    return [
+        titleMarkup,
+        imageMarkup,
+        `<p class="post-text">${post.text}</p>`,
+        `<p class="post-notes">${post.notes}</p>`,
+        tagsMarkup,
+        '<hr aria-hidden="true">',
+        '<div class="share-container"><p aria-hidden="true">Share this fact!</p><ul class="share-buttons margins-off"><li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li><li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li><li><button class="share-button copy-link" type="button" aria-label="Copy link">Web</button></li></ul></div>'
+    ].filter(Boolean).join('');
+}
+
 async function loadPosts() {
     if (isLoading) return; 
     isLoading = true;
@@ -177,22 +194,7 @@ async function loadPosts() {
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.className = 'post gradient-border';
-            postElement.innerHTML = `
-                ${post.title ? `<h2 class="post-title"><a href="post.html?id=${post.id}">${post.title}</a></h2>` : ''}
-                ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
-                <p class="post-text">${post.text}</p>
-                <p class="post-notes">${post.notes}</p>
-                <ul class="post-tags margins-off" aria-label="Tags">${post.tags.map(tag => `<li><a href="tag.html?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a></li>`).join('')}</ul>
-                <hr aria-hidden="true">
-                <div class="share-container">
-                    <p aria-hidden="true">Share this fact!</p>
-                    <ul class="share-buttons margins-off">
-                        <li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li>
-                        <li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
-                        <li><button class="share-button copy-link" type="button" aria-label="Copy link">Web</button></li>
-                    </ul>
-                </div>
-            `;
+            postElement.innerHTML = buildPostMarkup(post);
             
             // Remove .post-notes if empty
             const notesEl = postElement.querySelector('.post-notes');

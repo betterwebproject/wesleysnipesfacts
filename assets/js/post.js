@@ -125,6 +125,23 @@ function updateOrCreateMeta(attr, attrValue, content) {
     meta.setAttribute('content', content);
 }
 
+function buildPostMarkup(post) {
+    const titleMarkup = post.title ? `<h1 class="post-title">${post.title}</h1>` : '';
+    const imageMarkup = post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : '';
+    const tags = Array.isArray(post.tags) ? post.tags : [];
+    const tagsMarkup = `<ul class="post-tags margins-off" aria-label="Tags">${tags.map(t => `<li><a href="tag.html?tag=${encodeURIComponent(t)}" class="tag">${t}</a></li>`).join('')}</ul>`;
+
+    return [
+        titleMarkup,
+        imageMarkup,
+        `<p class="post-text">${post.text}</p>`,
+        `<p class="post-notes">${post.notes}</p>`,
+        tagsMarkup,
+        '<hr aria-hidden="true">',
+        '<div class="share-container"><p aria-hidden="true">Share this fact!</p><ul class="share-buttons margins-off"><li><button id="share-twitter" class="share-button" type="button" aria-label="Share to Twitter">Twitter</button></li><li><button id="share-tumblr" class="share-button" type="button" aria-label="Share to Tumblr">Tumblr</button></li><li><button id="copyLink" class="share-button copy" type="button" aria-label="Copy link">Web</button></li></ul></div>'
+    ].filter(Boolean).join('');
+}
+
 async function loadPost() {
     // Remove any previous heading first
     const prevHeading = document.querySelector('.post-results-heading');
@@ -151,22 +168,7 @@ async function loadPost() {
                 postContent.parentNode.insertBefore(headingEl, postContent);
             }
             
-            postContent.innerHTML = `
-                ${post.title ? `<h1 class="post-title">${post.title}</h1>` : ''}
-                ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
-                <p class="post-text">${post.text}</p>
-                <p class="post-notes">${post.notes}</p>
-                <ul class="post-tags margins-off" aria-label="Tags">${post.tags.map(t => `<li><a href="tag.html?tag=${encodeURIComponent(t)}" class="tag">${t}</a></li>`).join('')}</ul>
-                <hr aria-hidden="true">
-                <div class="share-container">
-                    <p aria-hidden="true">Share this fact!</p>
-                    <ul class="share-buttons margins-off">
-                        <li><button id="share-twitter" class="share-button" type="button" aria-label="Share to Twitter">Twitter</button></li>
-                        <li><button id="share-tumblr" class="share-button" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
-                        <li><button id="copyLink" class="share-button copy" type="button" aria-label="Copy link">Web</button></li>
-                    </ul>
-                </div>
-            `;
+            postContent.innerHTML = buildPostMarkup(post);
             // Remove .post-notes if empty
             const notesEl = postContent.querySelector('.post-notes');
             if (notesEl && !notesEl.textContent.trim()) {

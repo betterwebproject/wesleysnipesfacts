@@ -112,6 +112,23 @@ function setupShareButtons(postElement, post) {
     });
 }
 
+function buildPostMarkup(post, activeTag) {
+    const highlightedText = activeTag ? highlightTagInText(post.text, activeTag) : post.text;
+    const highlightedNotes = activeTag ? highlightTagInText(post.notes, activeTag) : post.notes;
+    const tags = Array.isArray(post.tags) ? post.tags : [];
+    const tagsMarkup = `<ul class="post-tags margins-off" aria-label="Tags">${tags.map(t => `<li><a href="tag.html?tag=${encodeURIComponent(t)}" class="tag${t === activeTag ? ' active-tag' : ''}">${t}</a></li>`).join('')}</ul>`;
+
+    return [
+        post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : '',
+        post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : '',
+        `<p class="post-text">${highlightedText}</p>`,
+        `<p class="post-notes">${highlightedNotes}</p>`,
+        tagsMarkup,
+        '<hr aria-hidden="true">',
+        '<div class="share-container"><p aria-hidden="true">Share this fact!</p><ul class="share-buttons margins-off"><li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li><li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li><li><button class="share-button copy copy-link" type="button" aria-label="Copy link">Web</button></li></ul></div>'
+    ].filter(Boolean).join('');
+}
+
 async function loadTagPosts() {
     if (isLoading) return;
     isLoading = true;
@@ -169,27 +186,8 @@ async function loadTagPosts() {
             const postElement = document.createElement('div');
             postElement.className = 'post';
             
-            // Highlight the tag in post text and notes
-            const highlightedText = tag ? highlightTagInText(post.text, tag) : post.text;
-            const highlightedNotes = tag ? highlightTagInText(post.notes, tag) : post.notes;
-            
             // Use classes instead of IDs for share buttons
-            postElement.innerHTML = `
-                ${post.title ? `<h2><a href="post.html?id=${post.id}" class="post-title">${post.title}</a></h2>` : ''}
-                ${post.image ? `<img src="${post.image}" alt="${post.title || ''}" class="post-image">` : ''}
-                <p class="post-text">${highlightedText}</p> 
-                <p class="post-notes">${highlightedNotes}</p>
-                <ul class="post-tags margins-off" aria-label="Tags">${post.tags.map(t =>`<li><a href="tag.html?tag=${encodeURIComponent(t)}" class="tag${t === tag ? ' active-tag' : ''}">${t}</a></li>`).join('')}</ul>
-                <hr aria-hidden="true">
-                <div class="share-container">
-                    <p aria-hidden="true">Share this fact!</p>
-                    <ul class="share-buttons margins-off">
-                        <li><button class="share-button share-twitter" type="button" aria-label="Share to Twitter">Twitter</button></li>
-                        <li><button class="share-button share-tumblr" type="button" aria-label="Share to Tumblr">Tumblr</button></li>
-                        <li><button class="share-button copy copy-link" type="button" aria-label="Copy link">Web</button></li>
-                    </ul>
-                </div>
-            `;
+            postElement.innerHTML = buildPostMarkup(post, tag);
             // Remove .post-notes if empty
             const notesEl = postElement.querySelector('.post-notes');
             if (notesEl && !notesEl.textContent.trim()) {
