@@ -30,16 +30,15 @@ function makeFootnotesAccessible() {
         link.href = `#fn-${footnoteNum}`;
         link.id = `fnref-${footnoteNum}`;
 
-        const visibleMarker = document.createElement('span');
-        visibleMarker.textContent = sup.textContent;
-        link.appendChild(visibleMarker);
-
         const screenReaderLabel = document.createElement('span');
-        screenReaderLabel.id = `fnref-${footnoteNum}-label`;
         screenReaderLabel.className = 'sr-only';
         screenReaderLabel.textContent = `Footnote ${footnoteNum}`;
         link.appendChild(screenReaderLabel);
-        link.setAttribute('aria-labelledby', screenReaderLabel.id);
+
+        const visibleMarker = document.createElement('span');
+        visibleMarker.textContent = footnoteNum;
+        visibleMarker.setAttribute('aria-hidden', 'true');
+        link.appendChild(visibleMarker);
         
         // Replace sup content with the link
         sup.textContent = '';
@@ -49,7 +48,6 @@ function makeFootnotesAccessible() {
         if (footnoteDefs[index]) {
             const def = footnoteDefs[index];
             def.id = `fn-${footnoteNum}`;
-            link.setAttribute('aria-describedby', `fn-${footnoteNum}`);
         }
     });
 }
