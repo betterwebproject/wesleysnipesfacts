@@ -28,7 +28,6 @@ function makeFootnotesAccessible() {
         // Wrap the sup content in a link
         const link = document.createElement('a');
         link.href = `#fn-${footnoteNum}`;
-        link.setAttribute('role', 'doc-noteref');
         link.id = `fnref-${footnoteNum}`;
 
         const visibleMarker = document.createElement('span');
@@ -50,7 +49,6 @@ function makeFootnotesAccessible() {
         if (footnoteDefs[index]) {
             const def = footnoteDefs[index];
             def.id = `fn-${footnoteNum}`;
-            def.setAttribute('role', 'doc-endnote');
             link.setAttribute('aria-describedby', `fn-${footnoteNum}`);
         }
     });
