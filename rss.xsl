@@ -13,7 +13,7 @@
         <link rel="preload" href="/assets/type/triptych_grotesque.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
         <link rel="preload" href="/assets/type/triptych_roman.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
         <link rel="preload" href="/assets/type/triptych_italick.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="/assets/css/style.css?v=3"/> 
+        <link rel="stylesheet" href="/assets/css/style.min.css"/> 
         <title><xsl:value-of select="rss/channel/title"/> RSS Feed - Wesley Snipes Facts</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32"/>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"/> 
