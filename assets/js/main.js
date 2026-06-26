@@ -78,9 +78,18 @@ function makeFootnotesAccessible(postElement, postId) {
         const link = document.createElement('a');
         link.href = `#${uniqueDefId}`;
         link.setAttribute('role', 'doc-noteref');
-        link.setAttribute('aria-label', `Footnote ${footnoteNum}`);
         link.id = uniqueRefId;
-        link.textContent = sup.textContent;
+
+        const visibleMarker = document.createElement('span');
+        visibleMarker.textContent = sup.textContent;
+        link.appendChild(visibleMarker);
+
+        const screenReaderLabel = document.createElement('span');
+        screenReaderLabel.id = `${uniqueRefId}-label`;
+        screenReaderLabel.className = 'sr-only';
+        screenReaderLabel.textContent = `Footnote ${footnoteNum}`;
+        link.appendChild(screenReaderLabel);
+        link.setAttribute('aria-labelledby', screenReaderLabel.id);
         
         // Replace sup content with the link
         sup.textContent = '';
