@@ -60,6 +60,7 @@
 html {
     font-size: 16px;
     background-color: var(--background);
+    overscroll-behavior: none;
 }
 
 html:focus-within {
@@ -71,7 +72,6 @@ html:focus-within {
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    overscroll-behavior: none;
 }
 
 body {
