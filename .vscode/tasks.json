@@ -6,6 +6,17 @@
       "type": "shell",
       "command": "node assets/js/generate_rss.js",
       "group": "build"
+    },
+    {
+      "label": "Sync CSS",
+      "type": "shell",
+      "command": "python3",
+      "args": [
+        "assets/py/minify_css.py",
+        "${workspaceFolder}/assets/css/style.css",
+        "${workspaceFolder}/assets/css/style.min.css"
+      ],
+      "group": "build"
     }
   ]
 }

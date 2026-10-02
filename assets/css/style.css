@@ -35,7 +35,7 @@
     --body: 'Triptych Roman';
     --italic: 'Triptych Italick';
     --heading: 'Triptych Grotesque';
-    --paragraph: calc(1.06rem + .35vw);
+    --paragraph: calc(1.06rem + .3vw);
     --micro: calc(var(--paragraph) * .9);
     --nav-link: calc(var(--paragraph) * 1.2);
     --heading-1: calc(1.6rem + .75vw);
@@ -83,7 +83,7 @@ body {
     padding: 4rem 1rem;
     font-family: var(--body);
     font-size: var(--paragraph);
-    line-height: 1.65;
+    line-height: calc(1.65em + .15vw);
     color: var(--primary);
     background-color: var(--background);
 }
